@@ -17,7 +17,6 @@ public class Teste {
 
     private static final String URL_BASE = "http://localhost:8888/api/v1/";
     private static final String URL_EMPRESA = URL_BASE + "empresa";
-    private static final String TOKEN = "@pi123Yhdfg5ai6#";
 
     public static void main(String[] args) {
 

@@ -5,7 +5,23 @@
  */
 package br.com.l2g.views.cliente;
 
+import br.com.l2g.model.Cliente;
+import br.com.l2g.util.Empresa;
+import br.com.l2g.util.Util;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.swing.table.DefaultTableModel;
+import org.apache.http.HttpException;
+import org.apache.http.client.methods.HttpGet;
 
 /**
  *
@@ -16,8 +32,13 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListagemCliente
      */
+    
+    private static final String URL_BASE = "http://localhost:8888/api/v1/";
+    private static final String URL_CLIENTE = URL_BASE + "cliente";
+    
     public ListagemCliente() {
         initComponents();
+        CarregaTabela();
     }
 
     /**
@@ -163,7 +184,7 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
@@ -187,4 +208,19 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void CarregaTabela() {
+        try {
+            //DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            //DefaultTableModel Tmodel = m;
+            //int col = m.getColumnCount();
+            //Object[] objects = new Object[col];
+            HttpGet get = new HttpGet(URL_CLIENTE);
+            String resposta = Util.enviaRequest(get);
+            List<Cliente> cliente = Arrays.asList(Util.jsonToObject(resposta, Cliente[].class));
+            cliente.forEach(System.out::println);
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
