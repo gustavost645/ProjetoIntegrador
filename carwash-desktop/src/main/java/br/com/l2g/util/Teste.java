@@ -51,27 +51,7 @@ public class Teste {
     private static Empresa criaEmpresa() {
         Empresa empresa = new Empresa();
         
-        empresa.setId(Long.parseLong("2"));
-        empresa.setCpfCnpj("28323609000110");
-        empresa.setInsEstadual("0150183500");
-        empresa.setRegimeTributario("1");
-        empresa.setRazaoSocial("GUILHERME LOPES KOLBE ");
-        empresa.setNomeFantasia("ALAVANKE ASSESSORIA CONSULTORIA E REPRESENTACAO");
-        empresa.setLogradouro("EST TRES VENDAS");
-        empresa.setCep("96511000");
-        empresa.setBairro("TRES VENDAS");
-        empresa.setMunicipio("CACHOEIRA DO SUL");
-        empresa.setCodMunicIbge("4303004");
-        empresa.setNumero("4679");
-        empresa.setComplemento("");
-        empresa.setUf("RS");
-        empresa.setEmail("ALAVANKEFOODSERVICE@GMAIL.COM");
-        empresa.setTelefone("5197215215");
-        empresa.setAmbiente("HOMOLOGACAO");
-        //empresa.setCertificado("");
-        empresa.setSenhaCertificado("1234");
-        empresa.setToken("487dd6dac77d7d74d1e1db2096c0df91f7182a7a292aa581a481d6917a2904d7");
-        empresa.setNsu("0000000000");
+        
         
         return empresa;
     }
