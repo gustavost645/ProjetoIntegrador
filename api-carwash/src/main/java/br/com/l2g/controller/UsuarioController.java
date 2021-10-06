@@ -5,12 +5,14 @@
  */
 package br.com.l2g.controller;
 
-import br.com.l2g.entity.Cliente;
-import br.com.l2g.service.ClienteService;
+import br.com.l2g.entity.Usuario;
+import br.com.l2g.service.UsuarioService;
+import br.com.l2g.util.Status;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +27,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gustavo Steinhoefel
  */
 @RestController
-@RequestMapping("/api/v1/cliente")
+@RequestMapping("/api/v1/usuario")
 @Slf4j
 @AllArgsConstructor
-public class ClienteController {
+public class UsuarioController {
 
-    private final ClienteService clienteService;
+    private final UsuarioService usuarioService;
 
     @GetMapping
     public ResponseEntity<?> listarTodos() {
         try {
-            List<Cliente> lista = clienteService.listarTudo();
+            List<Usuario> lista = usuarioService.listarTudo();
             log.info(lista.toString());
             return ResponseEntity.ok(lista);
         } catch (Exception ex) {
@@ -44,19 +46,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> salvar(@RequestBody Usuario usuario) {
         try {
-            clienteService.salvar(cliente);
-            return ResponseEntity.ok(cliente);
+            usuarioService.salvar(usuario);
+            return ResponseEntity.ok(usuario);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @GetMapping("{id}")
-    public ResponseEntity<?> listarPorID(@PathVariable("id") Integer idCliente) {
+    public ResponseEntity<?> listarPorID(@PathVariable("id") Integer idUsuario) {
         try {
-            Optional<Cliente> lista = clienteService.listarPorId(idCliente);
+            Optional<Usuario> lista = usuarioService.listarPorId(idUsuario);
             log.info(lista.toString());
             return ResponseEntity.ok(lista);
         } catch (Exception ex) {
@@ -65,14 +67,25 @@ public class ClienteController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletarCliente(@PathVariable("id") Integer idCliente) {
+    public ResponseEntity<?> deletarUsuario(@PathVariable("id") Integer idUsuario) {
         try {
-            log.info("Registro a ser deletado: "+idCliente);
-            clienteService.deletar(idCliente);
+            log.info("Registro a ser deletado: " + idUsuario);
+            usuarioService.deletar(idUsuario);
             return ResponseEntity.ok().build();
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
+    }
+
+    @PostMapping("/login")
+    public Status loginUser(@Valid @RequestBody Usuario user) {
+        List<Usuario> users = usuarioService.listarTudo();
+        for (Usuario other : users) {
+            if (other.getLogin().equals(user.getLogin()) && other.getSenha().equals(user.getSenha())) {
+                return Status.SUCCESS;
+            }
+        }
+        return Status.FAILURE;
     }
 
 }

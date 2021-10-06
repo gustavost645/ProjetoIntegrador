@@ -5,8 +5,8 @@
  */
 package br.com.l2g.service;
 
-import br.com.l2g.entity.Cliente;
-import br.com.l2g.repository.ClienteRepository;
+import br.com.l2g.entity.Cidade;
+import br.com.l2g.repository.CidadeRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -18,24 +18,25 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class ClienteService {
+public class CidadeService {
     
-    private final ClienteRepository repository;
+    private final CidadeRepository repository;
 
-    public Cliente salvar(Cliente cliente){
+    public Cidade salvar(Cidade cliente){
         return repository.save(cliente);
     }
 
-    public void deletar(Integer idCliente){
-        repository.deleteById(idCliente);
+    public void deletar(Integer idCidade){
+        repository.deleteById(idCidade);
     }
 
-    public List<Cliente> listarTudo(){
+    public List<Cidade> listarTudo(){
         return repository.findAll();
     }
 
-    public Optional<Cliente> listarPorId(Integer idCliente) {
-        return repository.findById(idCliente);
+    
+    public Optional<Cidade> listarPorId(Integer idCidade) {
+        return repository.findById(idCidade);
     }
 
 }

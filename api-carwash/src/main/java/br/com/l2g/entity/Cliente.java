@@ -11,12 +11,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -24,6 +27,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -41,8 +45,9 @@ public class Cliente implements Serializable{
     @Column(name="cli_nome")
     private String nome;
     
-    @Column(name="cli_cd_cidade")
-    private Integer idCidade;
+    @ManyToOne
+    @JoinColumn(name="cli_cd_cidade", nullable=false)
+    private Cidade cidade;
     
     @Column(name="cli_endereco")
     private String endereco;

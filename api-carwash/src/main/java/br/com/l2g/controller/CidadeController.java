@@ -5,8 +5,8 @@
  */
 package br.com.l2g.controller;
 
-import br.com.l2g.entity.Cliente;
-import br.com.l2g.service.ClienteService;
+import br.com.l2g.entity.Cidade;
+import br.com.l2g.service.CidadeService;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -25,17 +25,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Gustavo Steinhoefel
  */
 @RestController
-@RequestMapping("/api/v1/cliente")
+@RequestMapping("/api/v1/cidade")
 @Slf4j
 @AllArgsConstructor
-public class ClienteController {
+public class CidadeController {
 
-    private final ClienteService clienteService;
+    private final CidadeService cidadeService;
 
     @GetMapping
     public ResponseEntity<?> listarTodos() {
         try {
-            List<Cliente> lista = clienteService.listarTudo();
+            List<Cidade> lista = cidadeService.listarTudo();
+            log.info(lista.toString());
+            return ResponseEntity.ok(lista);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    @GetMapping("{id}")
+    public ResponseEntity<?> listarPorID(@PathVariable("id") Integer idCidade) {
+        try {
+            Optional<Cidade> lista = cidadeService.listarPorId(idCidade);
             log.info(lista.toString());
             return ResponseEntity.ok(lista);
         } catch (Exception ex) {
@@ -44,31 +55,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> salvar(@RequestBody Cidade cliente) {
         try {
-            clienteService.salvar(cliente);
+            cidadeService.salvar(cliente);
             return ResponseEntity.ok(cliente);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-    
-    @GetMapping("{id}")
-    public ResponseEntity<?> listarPorID(@PathVariable("id") Integer idCliente) {
-        try {
-            Optional<Cliente> lista = clienteService.listarPorId(idCliente);
-            log.info(lista.toString());
-            return ResponseEntity.ok(lista);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deletarCliente(@PathVariable("id") Integer idCliente) {
+    public ResponseEntity<?> deletarCidade(@PathVariable("id") Integer idCidade) {
         try {
-            log.info("Registro a ser deletado: "+idCliente);
-            clienteService.deletar(idCliente);
+            cidadeService.deletar(idCidade);
             return ResponseEntity.ok().build();
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());

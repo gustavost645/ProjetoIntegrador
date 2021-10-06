@@ -5,8 +5,8 @@
  */
 package br.com.l2g.service;
 
-import br.com.l2g.entity.Cliente;
-import br.com.l2g.repository.ClienteRepository;
+import br.com.l2g.entity.Usuario;
+import br.com.l2g.repository.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -18,24 +18,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class ClienteService {
+public class UsuarioService {
     
-    private final ClienteRepository repository;
+    private final UsuarioRepository repository;
 
-    public Cliente salvar(Cliente cliente){
+    public Usuario salvar(Usuario cliente){
         return repository.save(cliente);
     }
 
-    public void deletar(Integer idCliente){
-        repository.deleteById(idCliente);
+    public void deletar(Integer idUsuario){
+        repository.deleteById(idUsuario);
     }
 
-    public List<Cliente> listarTudo(){
+    public List<Usuario> listarTudo(){
         return repository.findAll();
     }
 
-    public Optional<Cliente> listarPorId(Integer idCliente) {
-        return repository.findById(idCliente);
+    public Optional<Usuario> listarPorId(Integer idUsuario) {
+        return repository.findById(idUsuario);
     }
+    
+    
 
 }
