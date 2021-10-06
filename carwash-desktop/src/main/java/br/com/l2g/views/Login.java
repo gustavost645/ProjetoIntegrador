@@ -5,14 +5,38 @@
  */
 package br.com.l2g.views;
 
+import br.com.l2g.model.Cidade;
+import br.com.l2g.model.Usuario;
+import br.com.l2g.util.Environment;
+import br.com.l2g.util.Util;
+import br.com.l2g.views.cidade.CadastroCidade;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
+import org.apache.http.HttpException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+
 /**
  *
  * @author Gustavo Steinhoefel
  */
 public class Login extends javax.swing.JDialog {
 
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_USUARIO = URL_BASE + "usuario";
+
     /**
      * Creates new form Login
+     *
      * @param parent
      * @param modal
      */
@@ -32,8 +56,8 @@ public class Login extends javax.swing.JDialog {
 
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
-        user = new javax.swing.JTextField();
+        passwordText = new javax.swing.JPasswordField();
+        userText = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -51,12 +75,12 @@ public class Login extends javax.swing.JDialog {
         jLabel5.setText("Senha:");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        password.setToolTipText("Informe sua Senha.");
+        passwordText.setToolTipText("Informe sua Senha.");
 
-        user.setToolTipText("Informe seu Usuário.");
-        user.addActionListener(new java.awt.event.ActionListener() {
+        userText.setToolTipText("Informe seu Usuário.");
+        userText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userActionPerformed(evt);
+                userTextActionPerformed(evt);
             }
         });
 
@@ -117,8 +141,8 @@ public class Login extends javax.swing.JDialog {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                            .addComponent(user)))
+                            .addComponent(passwordText, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                            .addComponent(userText)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,11 +161,11 @@ public class Login extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,25 +183,20 @@ public class Login extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+    private void userTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userActionPerformed
+    }//GEN-LAST:event_userTextActionPerformed
 
     private void jButton2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton2FocusGained
-        
+
     }//GEN-LAST:event_jButton2FocusGained
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       //instanciando a tela principal
-       Principal frame =  new Principal();
-       //fechando - tela de login
-       this.dispose();
-       //chama tela principal do sistema
-       frame.setVisible(true);
+        validaUsuario();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusGained
-        
+
     }//GEN-LAST:event_jButton1FocusGained
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -233,7 +252,44 @@ public class Login extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField password;
-    private javax.swing.JTextField user;
+    private javax.swing.JPasswordField passwordText;
+    private javax.swing.JTextField userText;
     // End of variables declaration//GEN-END:variables
+
+    private void validaUsuario() {
+
+        try {
+            String URL = URL_USUARIO + "/login";
+            HttpPost post = new HttpPost(URL);
+            Usuario user = informaUsuario();
+            String jsonEnvio = Util.objectToJson(user);
+            post.setEntity(new StringEntity(jsonEnvio));
+            String jsonResposta = Util.enviaRequest(post);
+            System.out.println(jsonResposta);
+            if (jsonResposta.trim().equalsIgnoreCase("\"success\"")) {
+                //instanciando a tela principal
+                Principal frame = new Principal();
+                //fechando - tela de login
+                this.dispose();
+                //chama tela principal do sistema
+                frame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Falha no login", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private Usuario informaUsuario() {
+        Usuario user = new Usuario();
+        user.setLogin(userText.getText().trim());
+        user.setSenha(Util.geraMD5(Arrays.toString(passwordText.getPassword())));
+
+        return user;
+    }
 }
