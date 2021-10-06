@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.l2g.views.cliente;
+package br.com.l2g.views.cidade;
 
-import br.com.l2g.model.Cliente;
+import br.com.l2g.model.Cidade;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Dimension;
@@ -34,15 +34,15 @@ import org.apache.http.client.methods.HttpGet;
  *
  * @author Gustavo Steinhoefel
  */
-public class ListagemCliente extends javax.swing.JInternalFrame {
+public class ListagemCidade extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ListagemCliente
+     * Creates new form ListagemCidade
      */
     private static final String URL_BASE = Environment.DEV.url();
-    private static final String URL_CLIENTE = URL_BASE + "cliente";
+    private static final String URL_CIDADE = URL_BASE + "cidade";
 
-    public ListagemCliente() {
+    public ListagemCidade() {
         initComponents();
         CarregaTabela();
     }
@@ -67,7 +67,7 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
         localizarText = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Listagem de Clientes");
+        setTitle("Listagem de Cidades");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
         jButton1.setText("Incluir");
@@ -118,11 +118,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "CPF/CNPJ", "Cidade"
+                "Código", "Nome", "UF"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -135,11 +135,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(350);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
-        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "CPF/CNPJ", "Cidade" }));
+        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "UF" }));
 
         localizarText.setText("Pesquisar");
         localizarText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -229,11 +229,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_localizarTextFocusGained
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DeletarCliente();
+        DeletarCidade();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AlterarCliente();
+        AlterarCidade();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void localizarTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_localizarTextKeyPressed
@@ -267,51 +267,50 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             DefaultTableModel Tmodel = m;
             int col = m.getColumnCount();
             Object[] objects = new Object[col];
-            HttpGet get = new HttpGet(URL_CLIENTE);
+            HttpGet get = new HttpGet(URL_CIDADE);
             String resposta = Util.enviaRequest(get);
-            List<Cliente> clienteList = Arrays.asList(Util.jsonToObject(resposta, Cliente[].class));
-            for (Cliente c : clienteList) {
-                objects[0] = c.getIdCliente();
-                objects[1] = c.getNome();
-                objects[2] = c.getCpfCnpj();
-                objects[3] = c.getCidade().getNomeCidade();
+            List<Cidade> cidadeList = Arrays.asList(Util.jsonToObject(resposta, Cidade[].class));
+            for (Cidade c : cidadeList) {
+                objects[0] = c.getIdCidade();
+                objects[1] = c.getNomeCidade();
+                objects[2] = c.getUfEstado();
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
 
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemCidade.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void IncluirCliente() {
-        CadastroCliente view = new CadastroCliente(null, true, "incluir");
+        CadastroCidade view = new CadastroCidade(null, true, "incluir");
         view.setVisible(true);
         CarregaTabela();
     }
 
-    private void AlterarCliente() {
-        CadastroCliente view = new CadastroCliente(null, true, "editar");
+    private void AlterarCidade() {
+        CadastroCidade view = new CadastroCidade(null, true, "editar");
         view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
     }
 
-    private void DeletarCliente() {
+    private void DeletarCidade() {
         try {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (opcao == 0 || opcao == -1) {
-                String url_id = URL_CLIENTE+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                String url_id = URL_CIDADE+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = Util.enviaRequest(delete);
                 JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemCidade.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }

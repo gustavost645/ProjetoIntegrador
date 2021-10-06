@@ -20,26 +20,12 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente {
-    private Integer idCliente;
+public class Cidade {
+    
+    private Integer idCidade;
 
-    private String nome;
+    private String nomeCidade;
 
-    private Cidade cidade;
+    private String ufEstado;
 
-    private String endereco;
-
-    private String numero;
-
-    private String complemento;
-
-    private String bairro;
-
-    private String cep;
-
-    private String cpfCnpj;
-
-    private String telefone;
-
-    private String email;
 }

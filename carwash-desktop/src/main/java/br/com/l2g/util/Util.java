@@ -50,11 +50,14 @@ public class Util {
 
         //metodo.setHeader(HttpHeaders.AUTHORIZATION, Util.criaTokenCriptorgrafado(TOKEN));
         CloseableHttpResponse response = httpClient.execute(metodo);
-
+        
+        
         int statusCode = response.getStatusLine().getStatusCode();
+        
         if (statusCode != 200 && statusCode != 201) {
             throw new HttpException("Erro ao enviar requisição: " + statusCode);
         }
+
         return EntityUtils.toString(response.getEntity());
     }
 }
