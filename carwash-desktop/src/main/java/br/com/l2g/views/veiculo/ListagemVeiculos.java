@@ -5,8 +5,30 @@
  */
 package br.com.l2g.views.veiculo;
 
+import br.com.l2g.model.Veiculo;
+import br.com.l2g.util.Environment;
+import br.com.l2g.util.Util;
 import br.com.l2g.views.cliente.*;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import org.apache.http.HttpException;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 
 /**
  *
@@ -17,6 +39,9 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListagemCliente
      */
+    
+     private static final String URL_BASE = Environment.DEV.url();
+     private static final String URL_VEICULO = URL_BASE + "veiculo";
     public ListagemVeiculos() {
         initComponents();
     }
@@ -59,12 +84,22 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/remover_free-27.png"))); // NOI18N
         jButton3.setText("Excluir");
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1479862814_Cancel.png"))); // NOI18N
         jButton4.setText("Cancelar");
@@ -82,9 +117,10 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cod", "Marca", "Placa"
             }
         ));
+        jTable1.setToolTipText("\n");
         jScrollPane1.setViewportView(jTable1);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -159,7 +195,8 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CadastroCliente view = new CadastroCliente(null, true, "incluir");
+       IncluirVeiculo();
+        CadastroVeiculos view = new CadastroVeiculos(null, true, "incluir");
         view.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -170,6 +207,22 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
         jTextField1.selectAll();
     }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         try {
+             AlterarVeiculo();
+         } catch (IOException ex) {
+             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (HttpException ex) {
+             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NoSuchPaddingException ex) {
+             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       DeletarVeiculo();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
@@ -188,4 +241,84 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+  private void CarregaTabela() {
+        try {
+            limpaTabela();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel Tmodel = m;
+            int col = m.getColumnCount();
+            Object[] objects = new Object[col];
+            HttpGet get = new HttpGet(URL_VEICULO);
+            String resposta = Util.enviaRequest(get);
+            List<Veiculo> veiculoLis = Arrays.asList(Util.jsonToObject(resposta, Veiculo[].class));
+            for (Veiculo v : veiculoLis) {
+                objects[0] = v.getIdVeiculos();
+                objects[1] = v.getMerca();
+                objects[2] = v.getPlaca();
+            
+
+                Tmodel.addRow(objects);
+                jTable1.setModel(Tmodel);
+
+            }
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void IncluirVeiculo() {
+        CadastroVeiculos view = new CadastroVeiculos(null, true, "incluir");
+        view.setVisible(true);
+        CarregaTabela();
+    }
+
+    private void AlterarVeiculo() throws IOException, HttpException, NoSuchPaddingException {
+        CadastroVeiculos view = new CadastroVeiculos(null, true, "editar");
+        view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
+        view.setVisible(true);
+        CarregaTabela();
+    }
+
+    private void DeletarVeiculo() {
+        try {
+            Object[] options = {"Sim", "Não"};
+            int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if (opcao == 0 || opcao == -1) {
+                String url_id = URL_VEICULO+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                HttpDelete delete = new HttpDelete(url_id);
+                String resposta = Util.enviaRequest(delete);
+                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                CarregaTabela();
+            }
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpaTabela() {
+        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+        for (int a1 = m.getRowCount(); a1 > 0; --a1) {
+            m.removeRow(a1 - 1);
+        }
+    }
+
+    private void pesquisaPorColuna(String text, int pesq) {
+        DefaultTableModel tabela = (DefaultTableModel) jTable1.getModel();
+        final TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabela);
+        jTable1.setRowSorter(sorter);
+
+        if (text.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            try {
+                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, pesq));
+            } catch (PatternSyntaxException pse) {
+                System.out.print("Erro: " + pse);
+            }
+        }
+    }
+
 }
