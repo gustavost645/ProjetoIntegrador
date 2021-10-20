@@ -165,7 +165,7 @@ public class cadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSalvarFocusGained
 
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-      //  salvarFluxo();
+      salvarFuncionario();
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
     private void nomeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeTextFocusGained
