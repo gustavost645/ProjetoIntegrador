@@ -11,15 +11,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
 @Setter
+@Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario{
+/**
+ *
+ * @author lucas
+ */
+public class Veiculo {
 
-    private Integer idUsuario;
-    private String nome;
-    private String login;
-    private String senha;      
+    private Integer idVeiculos;
+    private String merca;
+    private String placa;
+
 }

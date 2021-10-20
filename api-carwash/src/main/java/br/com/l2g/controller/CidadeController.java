@@ -7,8 +7,10 @@ package br.com.l2g.controller;
 
 import br.com.l2g.entity.Cidade;
 import br.com.l2g.service.CidadeService;
+import br.com.l2g.util.Status;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -73,5 +75,14 @@ public class CidadeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-
+    @PostMapping("/nome")
+    public int pesquisaNome(@Valid @RequestBody Cidade cid) {
+        List<Cidade> cidades = cidadeService.listarTudo();
+        for (Cidade other : cidades) {
+            if (other.getNomeCidade().equalsIgnoreCase(cid.getNomeCidade())) {
+                return other.getIdCidade();
+            }
+        }
+        return 0;
+    }
 }

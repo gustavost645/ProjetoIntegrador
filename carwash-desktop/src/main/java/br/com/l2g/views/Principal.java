@@ -7,7 +7,7 @@ package br.com.l2g.views;
 
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
-import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
+import br.com.l2g.views.veiculo.ListagemVeiculos;
 
 /**
  *
@@ -133,6 +133,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jSeparator4);
 
         jMenuItem4.setText("Funcionarios");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
         jMenu1.add(jSeparator2);
 
@@ -146,6 +151,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jSeparator7);
 
         jMenuItem2.setText("Veiculos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Serviços");
@@ -226,10 +236,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-          ListagemCaixa view = new ListagemCaixa();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-       // view.setPosicao();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -245,6 +252,17 @@ public class Principal extends javax.swing.JFrame {
         view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ListagemVeiculos view = new ListagemVeiculos();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

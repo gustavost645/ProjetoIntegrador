@@ -39,4 +39,7 @@ public class CidadeService {
         return repository.findById(idCidade);
     }
 
+    public Cidade buscaPorNome(String nome) {
+        return repository.findNomeCidade(nome);
+    }
 }
