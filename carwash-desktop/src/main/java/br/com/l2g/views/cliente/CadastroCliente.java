@@ -20,10 +20,12 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.tools.ShellFunctions.input;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.json.*;
 
 /**
  *
@@ -33,7 +35,7 @@ public class CadastroCliente extends javax.swing.JDialog {
 
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_CLIENTE = URL_BASE + "cliente";
-    private static final String URL_CIDADE  = URL_BASE + "cidade";
+    private static final String URL_CIDADE = URL_BASE + "cidade";
 
     /**
      * Creates new form CadastroCliente
@@ -463,7 +465,7 @@ public class CadastroCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_cepTextFocusGained
 
     private void cepTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cepTextFocusLost
-        //
+        pesquisarCEP();
     }//GEN-LAST:event_cepTextFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -583,40 +585,79 @@ public class CadastroCliente extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> tipo_pessoaBox;
     // End of variables declaration//GEN-END:variables
 
-    
     private void limpaCamposCidade() {
         cidadeIdText.setText("");
         nomeCidadeText.setText("");
         estadoText.setText("");
     }
-    
-    private void pesquisarCidadeporId() {
+
+    private void pesquisarCidadeporNome(String nome) {
         try {
-            String URL_PESQ = URL_CIDADE + "/" + cidadeIdText.getText().trim();
-            HttpGet get = new HttpGet(URL_PESQ);
-            String resposta = Util.enviaRequest(get);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cidade.class));
-            if (retorno.isPresent()) {
-                Cidade cidade = (Cidade) retorno.get();
-                nomeCidadeText.setText(cidade.getNomeCidade());
-                estadoText.setText(cidade.getUfEstado());
+            String URL = URL_CIDADE + "/nome";
+            HttpPost post = new HttpPost(URL);
+            Cidade c = new Cidade();
+            c.setNomeCidade(nome);
+            String jsonEnvio = Util.objectToJson(c);
+            post.setEntity(new StringEntity(jsonEnvio));
+            String jsonResposta = Util.enviaRequest(post);
+            System.out.println(jsonResposta);
+
+            if (!jsonResposta.trim().equalsIgnoreCase("0")) {
+                cidadeIdText.setText(jsonResposta.trim());
+                pesquisarCidadeporId();
             } else {
-                JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                limpaCamposCidade();
-                cidadeIdText.requestFocusInWindow();
+                JOptionPane.showMessageDialog(null, "Cidade não encontrada!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void pesquisarCEP() {
+        try {
+            HttpGet get = new HttpGet("https://viacep.com.br/ws/" + cepText.getText().replace("-", "") + "/json/unicode/");
+            String resposta = Util.enviaRequest(get);
+            JSONObject objCEP = new JSONObject(resposta);
+            logradouroText.setText(objCEP.getString("logradouro"));
+            bairroText.setText(objCEP.getString("bairro"));
+
+            pesquisarCidadeporNome(objCEP.getString("localidade"));
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
+    private void pesquisarCidadeporId() {
+        try {
+            if (!cidadeIdText.getText().equals("")) {
+                String URL_PESQ = URL_CIDADE + "/" + cidadeIdText.getText().trim();
+                HttpGet get = new HttpGet(URL_PESQ);
+                String resposta = Util.enviaRequest(get);
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cidade.class));
+                if (retorno.isPresent()) {
+                    Cidade cidade = (Cidade) retorno.get();
+                    nomeCidadeText.setText(cidade.getNomeCidade());
+                    estadoText.setText(cidade.getUfEstado());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    limpaCamposCidade();
+                    cidadeIdText.requestFocusInWindow();
+                }
+            }
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void listarCidade() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
     private void salvarCliente() {
         try {
             HttpPost post = new HttpPost(URL_CLIENTE);
@@ -627,11 +668,11 @@ public class CadastroCliente extends javax.swing.JDialog {
             Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Cliente.class));
             if (!retorno.isPresent()) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
-            
+
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -643,26 +684,26 @@ public class CadastroCliente extends javax.swing.JDialog {
         cidade.setIdCidade(Integer.parseInt(cidadeIdText.getText().trim()));
         cidade.setNomeCidade(nomeCidadeText.getText().trim());
         cidade.setUfEstado(estadoText.getText().trim());
-        
+
         Cliente cliente = new Cliente();
-        
-        if(!codigoClienteText.getText().trim().isEmpty()){
+
+        if (!codigoClienteText.getText().trim().isEmpty()) {
             cliente.setIdCliente(Integer.parseInt(codigoClienteText.getText().trim()));
         }
-        
+
         cliente.setNome(nomeText.getText().trim().toUpperCase());
         cliente.setEndereco(logradouroText.getText().trim().toUpperCase());
         cliente.setNumero(numeroText.getText().trim().toUpperCase());
         cliente.setComplemento(complementoText.getText().trim().toUpperCase());
         cliente.setBairro(bairroText.getText().trim().toUpperCase());
-        cliente.setCep(cepText.getText().trim().replaceAll("-",""));
-        cliente.setCpfCnpj(cpfText.getText().trim().replace(".", "").replace("/","").replaceAll("-",""));
-        cliente.setTelefone(telefoneText.getText().trim().replace("(", "").replace(")","").replaceAll("-",""));
+        cliente.setCep(cepText.getText().trim().replaceAll("-", ""));
+        cliente.setCpfCnpj(cpfText.getText().trim().replace(".", "").replace("/", "").replaceAll("-", ""));
+        cliente.setTelefone(telefoneText.getText().trim().replace("(", "").replace(")", "").replaceAll("-", ""));
         cliente.setEmail(emailText.getText().trim().toUpperCase());
-        
+
         cliente.setCidade(cidade);
-        
-        return cliente; 
+
+        return cliente;
     }
 
     public void enviarCodigoSelecionado(String id) {
@@ -673,7 +714,7 @@ public class CadastroCliente extends javax.swing.JDialog {
             Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cliente.class));
             if (retorno.isPresent()) {
                 Cliente cliente = (Cliente) retorno.get();
-                
+
                 codigoClienteText.setText(String.valueOf(cliente.getIdCliente()));
                 nomeText.setText(cliente.getNome());
                 logradouroText.setText(cliente.getEndereco());
@@ -687,7 +728,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                 cidadeIdText.setText(String.valueOf(cliente.getCidade().getIdCidade()));
                 nomeCidadeText.setText(cliente.getCidade().getNomeCidade());
                 estadoText.setText(cliente.getCidade().getUfEstado());
-            } 
+            }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
