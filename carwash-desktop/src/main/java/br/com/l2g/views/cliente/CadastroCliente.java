@@ -111,7 +111,19 @@ public class CadastroCliente extends javax.swing.JDialog {
 
         jLabel5.setText("*Logradouro:");
 
+        logradouroText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logradouroTextActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("*Numero:");
+
+        complementoText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                complementoTextActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Complemento:");
 
@@ -133,6 +145,11 @@ public class CadastroCliente extends javax.swing.JDialog {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 cepTextFocusLost(evt);
+            }
+        });
+        cepText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cepTextActionPerformed(evt);
             }
         });
 
@@ -158,6 +175,11 @@ public class CadastroCliente extends javax.swing.JDialog {
 
         nomeCidadeText.setEditable(false);
         nomeCidadeText.setFocusable(false);
+        nomeCidadeText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeCidadeTextActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("*Nome da Cidade:");
 
@@ -384,6 +406,11 @@ public class CadastroCliente extends javax.swing.JDialog {
                 nomeTextFocusLost(evt);
             }
         });
+        nomeText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeTextActionPerformed(evt);
+            }
+        });
 
         codigoClienteText.setEditable(false);
         codigoClienteText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
@@ -510,6 +537,26 @@ public class CadastroCliente extends javax.swing.JDialog {
     private void cidadeIdTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cidadeIdTextFocusLost
         pesquisarCidadeporId();
     }//GEN-LAST:event_cidadeIdTextFocusLost
+
+    private void logradouroTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logradouroTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logradouroTextActionPerformed
+
+    private void complementoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_complementoTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_complementoTextActionPerformed
+
+    private void cepTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cepTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cepTextActionPerformed
+
+    private void nomeCidadeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeCidadeTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeCidadeTextActionPerformed
+
+    private void nomeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeTextActionPerformed
 
     /**
      * @param args the command line arguments
