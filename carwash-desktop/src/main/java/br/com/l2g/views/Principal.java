@@ -8,6 +8,7 @@ package br.com.l2g.views;
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
+import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
 
 /**
  *
@@ -236,7 +237,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
+          ListagemCaixa view = new ListagemCaixa();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+       // view.setPosicao();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
