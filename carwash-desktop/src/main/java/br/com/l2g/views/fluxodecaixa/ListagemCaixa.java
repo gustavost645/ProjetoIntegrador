@@ -8,6 +8,7 @@ package br.com.l2g.views.fluxodecaixa;
 import br.com.l2g.model.FluxoDeCaixa;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -227,6 +228,11 @@ public class ListagemCaixa extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboColunasBoxActionPerformed
 
+    
+     public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboColunasBox;
