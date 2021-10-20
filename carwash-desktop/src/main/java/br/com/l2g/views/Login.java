@@ -274,9 +274,9 @@ public class Login extends javax.swing.JDialog {
                 //chama tela principal do sistema
                 frame.setVisible(true);
             } else {
+
                 JOptionPane.showMessageDialog(null, "Falha no login", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
-            
 
         } catch (Exception ex) {
             Logger.getLogger(CadastroCidade.class.getName()).log(Level.SEVERE, null, ex);

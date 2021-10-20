@@ -11,10 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- *
- * @author Gustavo Steinhoefel
- */
+
 @Setter
 @Getter
 @ToString
