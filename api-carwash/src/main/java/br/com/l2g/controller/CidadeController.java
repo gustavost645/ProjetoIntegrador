@@ -76,7 +76,7 @@ public class CidadeController {
         }
     }
     @PostMapping("/nome")
-    public int pesquisaNome(@Valid @RequestBody Cidade cid) {
+    public int loginUser(@Valid @RequestBody Cidade cid) {
         List<Cidade> cidades = cidadeService.listarTudo();
         for (Cidade other : cidades) {
             if (other.getNomeCidade().equalsIgnoreCase(cid.getNomeCidade())) {

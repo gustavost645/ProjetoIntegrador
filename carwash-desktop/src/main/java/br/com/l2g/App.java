@@ -20,6 +20,7 @@ public class App {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             new Login(null, true).setVisible(true);
+            
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
