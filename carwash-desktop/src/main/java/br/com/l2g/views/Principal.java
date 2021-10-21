@@ -9,6 +9,7 @@ import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
 import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
+import br.com.l2g.views.servicos.ListagemServico;
 
 /**
  *
@@ -160,6 +161,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Serviços");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
         jMenu1.add(jSeparator3);
 
@@ -267,6 +273,13 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+         ListagemServico view = new ListagemServico();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
