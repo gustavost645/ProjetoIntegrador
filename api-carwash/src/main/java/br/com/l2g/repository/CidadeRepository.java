@@ -8,6 +8,7 @@ package br.com.l2g.repository;
 import br.com.l2g.entity.Cidade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
     
-    @Query(value="SELECT * FROM cidade WHERE cid_nome like '%?1%'",nativeQuery = true)
-    Cidade findNomeCidade(String nome);
+    @Query(value="SELECT * FROM cidades c WHERE c.cid_nome ilike %?1%",nativeQuery = true)
+    Cidade findNomeCidade(String cidade);
+    
 }

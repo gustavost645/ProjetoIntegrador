@@ -647,11 +647,12 @@ public class CadastroCliente extends javax.swing.JDialog {
             String jsonEnvio = Util.objectToJson(c);
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
-            System.out.println(jsonResposta);
-
-            if (!jsonResposta.trim().equalsIgnoreCase("0")) {
-                cidadeIdText.setText(jsonResposta.trim());
-                pesquisarCidadeporId();
+            Cidade cidade = Util.jsonToObject(jsonResposta, Cidade.class);
+            System.out.println(cidade.toString());
+            if (cidade != null) {
+                cidadeIdText.setText(cidade.getIdCidade().toString());
+                nomeCidadeText.setText(cidade.getNomeCidade());
+                estadoText.setText(cidade.getUfEstado());
             } else {
                 JOptionPane.showMessageDialog(null, "Cidade não encontrada!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -684,7 +685,7 @@ public class CadastroCliente extends javax.swing.JDialog {
                 String URL_PESQ = URL_CIDADE + "/" + cidadeIdText.getText().trim();
                 HttpGet get = new HttpGet(URL_PESQ);
                 String resposta = Util.enviaRequest(get);
-                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cidade.class));
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cidade.class));                
                 if (retorno.isPresent()) {
                     Cidade cidade = (Cidade) retorno.get();
                     nomeCidadeText.setText(cidade.getNomeCidade());

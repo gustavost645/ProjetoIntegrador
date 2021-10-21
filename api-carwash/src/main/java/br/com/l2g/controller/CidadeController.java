@@ -44,7 +44,7 @@ public class CidadeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @GetMapping("{id}")
     public ResponseEntity<?> listarPorID(@PathVariable("id") Integer idCidade) {
         try {
@@ -75,14 +75,9 @@ public class CidadeController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+
     @PostMapping("/nome")
-    public int loginUser(@Valid @RequestBody Cidade cid) {
-        List<Cidade> cidades = cidadeService.listarTudo();
-        for (Cidade other : cidades) {
-            if (other.getNomeCidade().equalsIgnoreCase(cid.getNomeCidade())) {
-                return other.getIdCidade();
-            }
-        }
-        return 0;
+    public Cidade pesquisarCidadeNome(@Valid @RequestBody Cidade cidade) {
+        return cidadeService.buscaPorNome(cidade.getNomeCidade());
     }
 }
