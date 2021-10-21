@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.l2g.views.funcionarios;
+package br.com.l2g.views.funcionario;
 
 import br.com.l2g.model.Funcionario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
+import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.PatternSyntaxException;
@@ -33,16 +34,15 @@ import org.apache.http.client.methods.HttpGet;
  *
  * @author lucas
  */
-public class ListagemFuncionario extends javax.swing.JInternalFrame {
+public class listagemFuncionario extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form NewJInternalFrame
+     * Creates new form listagemFuncionario
      */
-    
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_FUNCIONARIO = URL_BASE + "funcionario";
 
-    public ListagemFuncionario() {
+    public listagemFuncionario() {
         initComponents();
     }
 
@@ -62,7 +62,7 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        buttonCancelar = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", " " }));
 
@@ -129,19 +129,14 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1479862814_Cancel.png"))); // NOI18N
-        buttonCancelar.setText("Cancelar");
-        buttonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonCancelar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        buttonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        buttonCancelar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                buttonCancelarFocusGained(evt);
-            }
-        });
-        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1479862814_Cancel.png"))); // NOI18N
+        jButton4.setText("Cancelar");
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCancelarActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -150,23 +145,24 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonCancelar))
+                                .addComponent(jButton4))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(comboColunasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
+                                .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -179,81 +175,57 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3))
-                    .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
-
-        getAccessibleContext().setAccessibleName("Listagem de Funcionario ");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void localizarTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_localizarTextFocusGained
-        //  localizarText.setText("");
-        //  localizarText.selectAll();
+        localizarText.setText("");
+        localizarText.selectAll();
     }//GEN-LAST:event_localizarTextFocusGained
 
     private void localizarTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_localizarTextKeyPressed
-        //  if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            //        pesquisaPorColuna(localizarText.getText().trim(), comboColunasBox.getSelectedIndex());
-            // }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            pesquisaPorColuna(localizarText.getText().trim(), comboColunasBox.getSelectedIndex());
+        }
     }//GEN-LAST:event_localizarTextKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           CadastroFuncionario(); 
+        IncluirFuncionario();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AlterarFuncionario();
+       AlterarFuncionario();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DeletarFuncionario();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void buttonCancelarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonCancelarFocusGained
-        //
-    }//GEN-LAST:event_buttonCancelarFocusGained
-
-    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         dispose();
-    }//GEN-LAST:event_buttonCancelarActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCancelar;
     private javax.swing.JComboBox<String> comboColunasBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField localizarText;
     // End of variables declaration//GEN-END:variables
 
-    
-    private void limpaTabela() {
-        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-        for (int a1 = m.getRowCount(); a1 > 0; --a1) {
-            m.removeRow(a1 - 1);
-        }
-    }
-    
-  
-      private void AlterarFuncionario() {
-        CadastroFuncionario view = new CadastroFuncionario(null, true, "editar");
-        view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
-        view.setVisible(true);
-        CarregaTabela();
-    }
-    
-    
-   private void CarregaTabela() {
+    private void CarregaTabela() {
         try {
             limpaTabela();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
@@ -262,24 +234,30 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
             Object[] objects = new Object[col];
             HttpGet get = new HttpGet(URL_FUNCIONARIO);
             String resposta = Util.enviaRequest(get);
-            List<Funcionario> clienteList = Arrays.asList(Util.jsonToObject(resposta, Funcionario[].class));
-            for (Funcionario c : clienteList) {
-                objects[0] = c.getIdFuncionario();
-                objects[1] = c.getNome();
-                
+            List<Funcionario> funcionariolista = Arrays.asList(Util.jsonToObject(resposta, Funcionario[].class));
+            for (Funcionario f : funcionariolista) {
+                objects[0] = f.getIdFuncionario();
+                objects[1] = f.getNome();
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
 
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(listagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void CadastroFuncionario() {
-        CadastroFuncionario view = new CadastroFuncionario(null, true, "incluir");
+
+    private void IncluirFuncionario() {
+        cadastroFuncionario view = new cadastroFuncionario(null, true, "incluir");
+        view.setVisible(true);
+        CarregaTabela();
+    }
+
+    private void AlterarFuncionario() {
+        cadastroFuncionario view = new cadastroFuncionario(null, true, "editar");
+        view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
     }
@@ -289,19 +267,26 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (opcao == 0 || opcao == -1) {
-                String url_id = URL_FUNCIONARIO+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                String url_id = URL_FUNCIONARIO + "/" + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = Util.enviaRequest(delete);
-                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n" + resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(listagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-     
-       private void pesquisaPorColuna(String text, int pesq) {
+
+    private void limpaTabela() {
+        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+        for (int a1 = m.getRowCount(); a1 > 0; --a1) {
+            m.removeRow(a1 - 1);
+        }
+    }
+
+    private void pesquisaPorColuna(String text, int pesq) {
         DefaultTableModel tabela = (DefaultTableModel) jTable1.getModel();
         final TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabela);
         jTable1.setRowSorter(sorter);
@@ -316,6 +301,10 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
             }
         }
     }
-
     
+     public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
+
 }
