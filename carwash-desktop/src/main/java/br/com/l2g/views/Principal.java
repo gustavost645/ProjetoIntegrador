@@ -9,6 +9,7 @@ import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
 import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
+import br.com.l2g.views.funcionario.listagemFuncionario;
 import br.com.l2g.views.servicos.ListagemServico;
 
 /**
@@ -207,6 +208,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("Ajuda");
 
         jMenuItem10.setText("Sobre");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenuBar1.add(jMenu3);
@@ -246,7 +252,7 @@ public class Principal extends javax.swing.JFrame {
           ListagemCaixa view = new ListagemCaixa();
         jDesktopPane1.add(view);
         view.setVisible(true);
-       // view.setPosicao();
+        view.setPosicao();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -271,7 +277,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        listagemFuncionario view = new listagemFuncionario();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -280,6 +289,10 @@ public class Principal extends javax.swing.JFrame {
         view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
