@@ -34,7 +34,7 @@ public class Veiculo implements Serializable {
 
     @Id
     @GeneratedValue(generator = "VeiculoSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="tip_codigo")
+    @Column(name="vei_codigo")
     private Integer idVeiculos;
     
     @ManyToOne
