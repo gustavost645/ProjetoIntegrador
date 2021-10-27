@@ -40,7 +40,7 @@ public class ListagemServico extends javax.swing.JInternalFrame {
      * Creates new form ListagemServico
      */
     private static final String URL_BASE = Environment.DEV.url();
-    private static final String URL_servico = URL_BASE + "serviço";
+    private static final String URL_servico = URL_BASE + "servico";
 
     public ListagemServico() {
         initComponents();
