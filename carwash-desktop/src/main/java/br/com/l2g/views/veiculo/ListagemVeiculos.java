@@ -39,9 +39,9 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListagemCliente
      */
-    
-     private static final String URL_BASE = Environment.DEV.url();
-     private static final String URL_VEICULO = URL_BASE + "veiculo";
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_VEICULO = URL_BASE + "veiculo";
+
     public ListagemVeiculos() {
         initComponents();
     }
@@ -195,13 +195,12 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       IncluirVeiculo();
-        CadastroVeiculos view = new CadastroVeiculos(null, true, "incluir");
-        view.setVisible(true);
+        IncluirVeiculo();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
@@ -209,19 +208,19 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         try {
-             AlterarVeiculo();
-         } catch (IOException ex) {
-             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (HttpException ex) {
-             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (NoSuchPaddingException ex) {
-             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            AlterarVeiculo();
+        } catch (IOException ex) {
+            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HttpException ex) {
+            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       DeletarVeiculo();
+        DeletarVeiculo();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public void setPosicao() {
@@ -242,7 +241,7 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-  private void CarregaTabela() {
+    private void CarregaTabela() {
         try {
             limpaTabela();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
@@ -256,7 +255,6 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
                 objects[0] = v.getIdVeiculos();
                 objects[1] = v.getMerca();
                 objects[2] = v.getPlaca();
-            
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
@@ -286,10 +284,10 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (opcao == 0 || opcao == -1) {
-                String url_id = URL_VEICULO+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                String url_id = URL_VEICULO + "/" + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = Util.enviaRequest(delete);
-                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n" + resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {

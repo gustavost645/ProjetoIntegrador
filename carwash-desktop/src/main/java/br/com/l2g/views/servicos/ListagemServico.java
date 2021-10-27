@@ -64,7 +64,7 @@ public class ListagemServico extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Serviço", " ", " " }));
+        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Serviço" }));
 
         localizarText.setText("Pesquisar");
         localizarText.addFocusListener(new java.awt.event.FocusAdapter() {
