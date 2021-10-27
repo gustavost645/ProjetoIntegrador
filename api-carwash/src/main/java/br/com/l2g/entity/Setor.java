@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,29 +24,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SequenceGenerator(name = "CidadesSeq", sequenceName = "cidades_cid_codigo_seq", allocationSize = 1)
-@Table(name = "cidades")
-public class Cidade implements Serializable{
-    
+@SequenceGenerator(name = "SetorSeq", sequenceName = "setor_set_codigo_seq", allocationSize = 1)
+public class Setor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "CidadesSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="cid_codigo")
-    private Integer idCidade;
+    @GeneratedValue(generator = "SetorSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name="set_codigo")
+    private Integer idSetor;
     
-    @Column(name="cid_nome")
-    private String nomeCidade;
-    
-    @Column(name="cid_uf")
-    private String ufEstado;
-    
-    /*@OneToMany
-    private Cliente cliente;*/
-    /*@OneToMany(mappedBy="clientes")
-    private Set<Cliente> cliente;*/
-    
-    
-            
-    
+    @Column(name="set_nome")
+    private String nomeSetor;
 }

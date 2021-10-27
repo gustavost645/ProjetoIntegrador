@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,29 +27,21 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SequenceGenerator(name = "CidadesSeq", sequenceName = "cidades_cid_codigo_seq", allocationSize = 1)
-@Table(name = "cidades")
-public class Cidade implements Serializable{
-    
+@SequenceGenerator(name = "VeiculoSeq", sequenceName = "veiculos_vei_codigo_seq", allocationSize = 1)
+@Table(name = "veiculos")
+public class Veiculo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "CidadesSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="cid_codigo")
-    private Integer idCidade;
+    @GeneratedValue(generator = "VeiculoSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name="tip_codigo")
+    private Integer idVeiculos;
     
-    @Column(name="cid_nome")
-    private String nomeCidade;
+    @ManyToOne
+    @JoinColumn(name="vei_cd_marca", nullable=false)
+    private Marca marca;
     
-    @Column(name="cid_uf")
-    private String ufEstado;
-    
-    /*@OneToMany
-    private Cliente cliente;*/
-    /*@OneToMany(mappedBy="clientes")
-    private Set<Cliente> cliente;*/
-    
-    
-            
-    
+    @Column(name="vei_placa")
+    private String placa;
+
 }

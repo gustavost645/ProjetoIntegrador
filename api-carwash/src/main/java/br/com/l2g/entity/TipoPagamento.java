@@ -25,29 +25,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SequenceGenerator(name = "CidadesSeq", sequenceName = "cidades_cid_codigo_seq", allocationSize = 1)
-@Table(name = "cidades")
-public class Cidade implements Serializable{
-    
+@SequenceGenerator(name = "TipoPagamentoSeq", sequenceName = "tipo_pagamento_tip_codigo_seq", allocationSize = 1)
+@Table(name = "tipo_pagamento")
+public class TipoPagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "CidadesSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="cid_codigo")
-    private Integer idCidade;
+    @GeneratedValue(generator = "TipoPagamentoSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name="tip_codigo")
+    private Integer idTipoPagamento;
     
-    @Column(name="cid_nome")
-    private String nomeCidade;
-    
-    @Column(name="cid_uf")
-    private String ufEstado;
-    
-    /*@OneToMany
-    private Cliente cliente;*/
-    /*@OneToMany(mappedBy="clientes")
-    private Set<Cliente> cliente;*/
-    
-    
-            
-    
+    @Column(name="tip_nome")
+    private String nomeTipoPagamento;
 }
