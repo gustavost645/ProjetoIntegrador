@@ -7,6 +7,7 @@ package br.com.l2g.service;
 
 import br.com.l2g.entity.Cliente;
 import br.com.l2g.repository.ClienteRepository;
+import br.com.l2g.util.Email;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,12 @@ public class ClienteService {
     private final ClienteRepository repository;
 
     public Cliente salvar(Cliente cliente){
+        
+        if (!cliente.getEmail().equals("")) {
+            Email email = new Email();            
+            email.sendSimpleMessage(cliente.getEmail(), "Cadastro Car Wash", "Olá " + cliente.getNome() +  "! \nSeu cadastro foi realizado com sucesso em nossa empresa! \nPara maiores informações, \nTelegram (99) 99998888");
+        }
+        
         return repository.save(cliente);
     }
 
