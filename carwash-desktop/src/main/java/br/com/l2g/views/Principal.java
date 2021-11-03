@@ -6,6 +6,7 @@
 package br.com.l2g.views;
 
 import br.com.l2g.MeiosDePagamento.ListagemMeioDePagamento;
+import br.com.l2g.views.Sobre.Sobre;
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
@@ -297,7 +298,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
+        Sobre view = new Sobre();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
