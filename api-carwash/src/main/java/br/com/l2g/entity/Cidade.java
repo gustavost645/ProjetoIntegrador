@@ -5,9 +5,11 @@
  */
 package br.com.l2g.entity;
 
+import br.com.l2g.util.CidadeAudit;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(CidadeAudit.class)
 @Entity
 @SequenceGenerator(name = "CidadesSeq", sequenceName = "cidades_cid_codigo_seq", allocationSize = 1)
 @Table(name = "cidades")
