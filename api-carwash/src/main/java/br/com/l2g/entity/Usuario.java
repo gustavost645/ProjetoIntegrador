@@ -5,9 +5,11 @@
  */
 package br.com.l2g.entity;
 
+import br.com.l2g.audit.UsuarioAudit;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(UsuarioAudit.class)
 @SequenceGenerator(name = "UsuarioSeq", sequenceName = "usuarios_usr_codigo_seq", allocationSize = 1)
 @Table(name = "usuarios")
 public class Usuario implements Serializable{

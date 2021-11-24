@@ -5,7 +5,7 @@
  */
 package br.com.l2g.entity;
 
-import br.com.l2g.util.CidadeAudit;
+import br.com.l2g.audit.CidadeAudit;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

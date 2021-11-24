@@ -5,9 +5,11 @@
  */
 package br.com.l2g.entity;
 
+import br.com.l2g.audit.SetorAudit;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(SetorAudit.class)
 @SequenceGenerator(name = "SetorSeq", sequenceName = "setor_set_codigo_seq", allocationSize = 1)
 public class Setor implements Serializable {
     private static final long serialVersionUID = 1L;

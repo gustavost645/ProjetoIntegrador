@@ -5,9 +5,12 @@
  */
 package br.com.l2g.entity;
 
+        
+import br.com.l2g.audit.TipoPagamentoAudit;        
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(TipoPagamentoAudit.class)
 @SequenceGenerator(name = "TipoPagamentoSeq", sequenceName = "tipo_pagamento_tip_codigo_seq", allocationSize = 1)
 @Table(name = "tipo_pagamento")
 public class TipoPagamento implements Serializable {
