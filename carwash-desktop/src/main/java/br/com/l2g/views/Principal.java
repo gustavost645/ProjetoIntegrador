@@ -7,6 +7,7 @@ package br.com.l2g.views;
 
 import br.com.l2g.MeiosDePagamento.ListagemMeioDePagamento;
 import br.com.l2g.views.Sobre.Sobre;
+import br.com.l2g.views.agendamento.ListagemAgendamento;
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
@@ -185,6 +186,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.setText("Movimento");
 
         jMenuItem6.setText("Agendamentos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem6);
         jMenu5.add(jSeparator5);
 
@@ -310,6 +316,13 @@ public class Principal extends javax.swing.JFrame {
         view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       ListagemAgendamento view = new ListagemAgendamento();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
