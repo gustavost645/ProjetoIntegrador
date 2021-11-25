@@ -2,7 +2,7 @@ package br.com.l2g.audit;
 
 import br.com.l2g.entity.ArqLog;
 import br.com.l2g.entity.Cliente;
-import br.com.l2g.repository.ArqLogRepository;
+import br.com.l2g.service.ClienteService;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -13,8 +13,8 @@ import javax.persistence.PreUpdate;
 
 public class ClienteAudit {
     
-    ArqLogRepository repository;
-    
+    ClienteService service;
+
     @PrePersist
     @PreUpdate
     private void beforeUpdate(Cliente o) {
@@ -49,9 +49,8 @@ public class ClienteAudit {
     private void salvarLog(String descricao) {
         ArqLog log = new ArqLog();
         log.setTabelaLog("cliente");
-        log.setDescricaoLog(descricao);               
-        repository.save(log);
-        //logService.save(log);
+        log.setDescricaoLog(descricao); 
+        service.salvarLog(log);
     }
 
 }
