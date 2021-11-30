@@ -6,6 +6,7 @@
 package br.com.l2g.views;
 
 import br.com.l2g.MeiosDePagamento.ListagemMeioDePagamento;
+import br.com.l2g.views.Movimento.ListageMovimento;
 import br.com.l2g.views.Sobre.Sobre;
 import br.com.l2g.views.agendamento.ListagemAgendamento;
 import br.com.l2g.views.cidade.ListagemCidade;
@@ -58,6 +59,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -194,6 +196,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem6);
         jMenu5.add(jSeparator5);
 
+        jMenuItem12.setText("Movimento");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem12);
+
         jMenuItem7.setText("Fluxo de Caixa");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +334,13 @@ public class Principal extends javax.swing.JFrame {
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+      ListageMovimento view = new ListageMovimento();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -372,6 +389,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

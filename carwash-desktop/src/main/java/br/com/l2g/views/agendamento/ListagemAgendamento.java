@@ -114,11 +114,11 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Data, Hora Inicial ", "Data, Hora Final", "Cidade"
+                "Código", "Nome", "Placa", "Tipo", "Data, Hora Inicial ", "Data, Hora Final", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true
+                false, false, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -139,7 +139,7 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
             }
         });
 
-        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "Data, Hora Inicial", "Data, Hora Final", "Cidade" }));
+        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "Placa", "Tipo", "Data, Hora Inicial", "Data, Hora Final", "Status" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
