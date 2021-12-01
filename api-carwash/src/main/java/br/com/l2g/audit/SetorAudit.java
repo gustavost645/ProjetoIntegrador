@@ -1,6 +1,7 @@
 package br.com.l2g.audit;
 
 import br.com.l2g.entity.Setor;
+import br.com.l2g.util.Utilitarios;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -18,31 +19,31 @@ public class SetorAudit {
     @PrePersist
     @PreUpdate
     private void beforeUpdate(Setor o) {
-        log.info("[SETOR AUDIT] About to update: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] About to update: " + o.getIdSetor());
     }
 
     @PreRemove
     private void beforeRemove(Setor o) {
-        log.info("[SETOR AUDIT] About to delete: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] About to delete: " + o.getIdSetor());
     }
 
     @PostPersist
     private void afterAdd(Setor o) {
-        log.info("[SETOR AUDIT] add complete for: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] add complete for: " + o.getIdSetor());
     }
 
     @PostRemove
     private void afterDelete(Setor o) {
-        log.info("[SETOR AUDIT] delete complete for: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] delete complete for: " + o.getIdSetor());
     }
 
     @PostUpdate
     private void afterUpdate(Setor o) {
-        log.info("[SETOR AUDIT] update complete for: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] update complete for: " + o.getIdSetor());
     }
     
     @PostLoad
     private void afterLoad(Setor o) {
-        log.info("[SETOR AUDIT] search: " + o.getIdSetor());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [SETOR AUDIT] search: " + o.getIdSetor());
     }
 }

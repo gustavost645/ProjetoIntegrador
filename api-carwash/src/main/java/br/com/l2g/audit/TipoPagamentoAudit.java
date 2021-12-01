@@ -1,6 +1,7 @@
 package br.com.l2g.audit;
 
 import br.com.l2g.entity.TipoPagamento;
+import br.com.l2g.util.Utilitarios;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -18,31 +19,31 @@ public class TipoPagamentoAudit {
     @PrePersist
     @PreUpdate
     private void beforeUpdate(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] About to update: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] About to update: " + o.getIdTipoPagamento());
     }
 
     @PreRemove
     private void beforeRemove(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] About to delete: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] About to delete: " + o.getIdTipoPagamento());
     }
 
     @PostPersist
     private void afterAdd(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] add complete for: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] add complete for: " + o.getIdTipoPagamento());
     }
 
     @PostRemove
     private void afterDelete(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] delete complete for: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] delete complete for: " + o.getIdTipoPagamento());
     }
 
     @PostUpdate
     private void afterUpdate(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] update complete for: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] update complete for: " + o.getIdTipoPagamento());
     }
     
     @PostLoad
     private void afterLoad(TipoPagamento o) {
-        log.info("[TIPO_PAGAMENTO AUDIT] search: " + o.getIdTipoPagamento());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [TIPO_PAGAMENTO AUDIT] search: " + o.getIdTipoPagamento());
     }
 }

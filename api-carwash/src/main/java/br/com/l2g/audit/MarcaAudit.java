@@ -1,6 +1,7 @@
 package br.com.l2g.audit;
 
 import br.com.l2g.entity.Marca;
+import br.com.l2g.util.Utilitarios;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -18,31 +19,31 @@ public class MarcaAudit {
     @PrePersist
     @PreUpdate
     private void beforeUpdate(Marca o) {
-        log.info("[MARCA AUDIT] About to update: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] About to update: " + o.getIdMarca());
     }
 
     @PreRemove
     private void beforeRemove(Marca o) {
-        log.info("[MARCA AUDIT] About to delete: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] About to delete: " + o.getIdMarca());
     }
 
     @PostPersist
     private void afterAdd(Marca o) {
-        log.info("[MARCA AUDIT] add complete for: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] add complete for: " + o.getIdMarca());
     }
 
     @PostRemove
     private void afterDelete(Marca o) {
-        log.info("[MARCA AUDIT] delete complete for: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] delete complete for: " + o.getIdMarca());
     }
 
     @PostUpdate
     private void afterUpdate(Marca o) {
-        log.info("[MARCA AUDIT] update complete for: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] update complete for: " + o.getIdMarca());
     }
     
     @PostLoad
     private void afterLoad(Marca o) {
-        log.info("[MARCA AUDIT] search: " + o.getIdMarca());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [MARCA AUDIT] search: " + o.getIdMarca());
     }
 }

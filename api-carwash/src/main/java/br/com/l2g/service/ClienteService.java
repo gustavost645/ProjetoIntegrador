@@ -5,12 +5,9 @@
  */
 package br.com.l2g.service;
 
-import br.com.l2g.entity.ArqLog;
 import br.com.l2g.entity.Cliente;
-import br.com.l2g.repository.ArqLogRepository;
 import br.com.l2g.repository.ClienteRepository;
 import br.com.l2g.util.Email;
-import com.sun.tools.sjavac.Log;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -25,7 +22,6 @@ import org.springframework.stereotype.Service;
 public class ClienteService {
     
     private final ClienteRepository repository;
-    private final ArqLogRepository arqrepository;
 
     public Cliente salvar(Cliente cliente){
         
@@ -47,11 +43,6 @@ public class ClienteService {
 
     public Optional<Cliente> listarPorId(Integer idCliente) {
         return repository.findById(idCliente);
-    }
-
-    public void salvarLog(ArqLog log) {
-        Log.info("cheguei aqui");
-        //arqrepository.save(log);
     }
 
 }
