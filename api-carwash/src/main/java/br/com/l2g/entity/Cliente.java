@@ -7,6 +7,7 @@ package br.com.l2g.entity;
 
 import br.com.l2g.audit.ClienteAudit;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -44,7 +45,7 @@ public class Cliente implements Serializable{
     @Column(name="cli_nome")
     private String nome;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="cli_cd_cidade", nullable=false)
     private Cidade cidade;
     

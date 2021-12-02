@@ -5,17 +5,16 @@
  */
 package br.com.l2g.entity;
 
-import br.com.l2g.audit.UsuarioAudit;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,37 +23,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Setter
 @Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EntityListeners(UsuarioAudit.class)
-@SequenceGenerator(name = "UsuarioSeq", sequenceName = "usuarios_usr_codigo_seq", allocationSize = 1)
-@Table(name = "usuarios")
-public class Usuario implements Serializable{
+@SequenceGenerator(name = "GrupoPermissaoSeq", sequenceName = "grupo_permissao_codigo_seq", allocationSize = 1)
+@Table(name = "grupo_permissao")
+public class GrupoPermissao implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "UsuarioSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="usr_codigo")
-    private Integer idUsuario;
+    @GeneratedValue(generator = "GrupoPermissaoSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name="gru_codigo")
+    private Integer codigoGrupoPermissao;
     
-    @Column(name="usr_name")
-    private String nome;
+    @Column(name="gru_descricao")
+    private String descricaoGrupoPermissao;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="per_grup_permission")
+    private List<Permissao> listaPermissao;
     
     
-    @Column(name="usr_login")
-    private String login;
-    
-    
-    @Column(name="usr_senha")
-    private String senha;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="usr_group_permission")
-    private GrupoPermissao grupoPermissao;
-  
 }

@@ -7,6 +7,7 @@ package br.com.l2g.entity;
 
 import br.com.l2g.audit.VeiculoAudit;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -40,7 +41,7 @@ public class Veiculo implements Serializable {
     @Column(name="vei_codigo")
     private Integer idVeiculos;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vei_cd_marca", nullable=false)
     private Marca marca;
     
