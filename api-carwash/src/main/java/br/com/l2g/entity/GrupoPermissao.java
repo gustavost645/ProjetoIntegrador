@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +45,8 @@ public class GrupoPermissao implements Serializable{
     @Column(name="gru_descricao")
     private String descricaoGrupoPermissao;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="per_grup_permission")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn (name = "per_grup_permission", referencedColumnName = "gru_codigo")
     private List<Permissao> listaPermissao;
     
     

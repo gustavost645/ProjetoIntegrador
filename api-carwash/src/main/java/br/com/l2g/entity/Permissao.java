@@ -6,8 +6,10 @@
 package br.com.l2g.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Setter
 @Getter
@@ -40,9 +45,6 @@ public class Permissao implements Serializable{
     
     @Column(name="per_class_name")
     private String classeNome;
-    
-    @Column(name="per_grup_permission")
-    private Integer codigoGrupoPermissao;
     
     @Column(name="per_list")
     private Boolean permissaoListar;

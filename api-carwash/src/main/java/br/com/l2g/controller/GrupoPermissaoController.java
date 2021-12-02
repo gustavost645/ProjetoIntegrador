@@ -9,7 +9,6 @@ import br.com.l2g.entity.GrupoPermissao;
 import br.com.l2g.service.GrupoPermissaoService;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

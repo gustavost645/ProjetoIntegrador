@@ -53,8 +53,8 @@ public class Usuario implements Serializable{
     @Column(name="usr_senha")
     private String senha;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="usr_group_permission")
+    @OneToOne()
+    @JoinColumn(name="usr_group_permission", referencedColumnName = "gru_codigo")
     private GrupoPermissao grupoPermissao;
   
 }
