@@ -38,6 +38,9 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
     /**
      * Creates new form CadastroVeiculos
+     * @param parent
+     * @param modal
+     * @param operacao
      */
     public CadastroVeiculos(Frame parent, boolean modal, String operacao) {
         super(parent, modal);
@@ -76,7 +79,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         placaText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro De Veiculos");
 
         jLabel11.setText("*Codigo:");
