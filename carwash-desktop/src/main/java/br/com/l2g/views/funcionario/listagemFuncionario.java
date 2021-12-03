@@ -34,7 +34,7 @@ import org.apache.http.client.methods.HttpGet;
  *
  * @author lucas
  */
-public class listagemFuncionario extends javax.swing.JInternalFrame {
+public class ListagemFuncionario extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form listagemFuncionario
@@ -42,8 +42,9 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_FUNCIONARIO = URL_BASE + "funcionario";
 
-    public listagemFuncionario() {
+    public ListagemFuncionario() {
         initComponents();
+        CarregaTabela();
     }
 
     /**
@@ -145,24 +146,22 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(327, Short.MAX_VALUE)
+                        .addComponent(comboColunasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(comboColunasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,7 +174,7 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -198,15 +197,15 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_localizarTextKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        IncluirFuncionario();
+        incluirFuncionario();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       AlterarFuncionario();
+        alterarFuncionario();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DeletarFuncionario();
+        deletarFuncionario();        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -237,32 +236,30 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
             List<Funcionario> funcionariolista = Arrays.asList(Util.jsonToObject(resposta, Funcionario[].class));
             for (Funcionario f : funcionariolista) {
                 objects[0] = f.getIdFuncionario();
-                objects[1] = f.getNome();
-
+                objects[1] = f.getNomeFuncionario();
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
-
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(listagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void IncluirFuncionario() {
-        cadastroFuncionario view = new cadastroFuncionario(null, true, "incluir");
+    private void incluirFuncionario() {
+        CadastroFuncionario view = new CadastroFuncionario(null, true, "incluir");
         view.setVisible(true);
-        CarregaTabela();
+        CarregaTabela();        
     }
 
-    private void AlterarFuncionario() {
-        cadastroFuncionario view = new cadastroFuncionario(null, true, "editar");
+    private void alterarFuncionario() {
+        CadastroFuncionario view = new CadastroFuncionario(null, true, "editar");
         view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
     }
 
-    private void DeletarFuncionario() {
+    private void deletarFuncionario() {
         try {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
@@ -274,7 +271,7 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(listagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -301,8 +298,8 @@ public class listagemFuncionario extends javax.swing.JInternalFrame {
             }
         }
     }
-    
-     public void setPosicao() {
+
+    public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }

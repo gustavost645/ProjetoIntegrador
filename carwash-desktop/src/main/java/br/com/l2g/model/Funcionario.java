@@ -23,6 +23,6 @@ import lombok.ToString;
 public class Funcionario {
     
     private Integer idFuncionario;
-    private String nome;
+    private String nomeFuncionario;
 
 }

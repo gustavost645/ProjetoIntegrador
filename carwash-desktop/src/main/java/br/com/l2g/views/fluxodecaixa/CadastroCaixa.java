@@ -28,7 +28,7 @@ import org.apache.http.entity.StringEntity;
  *
  * @author lucas
  */
-public class CadastroCaixa extends javax.swing.JFrame {
+public class CadastroCaixa extends javax.swing.JDialog {
 
     /**
      * Creates new form CadastroCaixa
@@ -38,7 +38,7 @@ public class CadastroCaixa extends javax.swing.JFrame {
      private static final String URL_PAGAMENTO = URL_BASE + "pagamento";
     
     public CadastroCaixa(Frame parent, boolean modal, String operacao) {
-      //  super(parent, modal);
+        super(parent, modal);
         initComponents();
         String viewTitulo = operacao.equals("incluir") ? "Cadastro de Cidades" : "Alterar Cidades";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";

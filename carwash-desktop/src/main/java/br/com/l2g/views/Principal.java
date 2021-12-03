@@ -12,7 +12,7 @@ import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
 import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
-import br.com.l2g.views.funcionario.listagemFuncionario;
+import br.com.l2g.views.funcionario.ListagemFuncionario;
 import br.com.l2g.views.servicos.ListagemServico;
 
 /**
@@ -290,7 +290,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        listagemFuncionario view = new listagemFuncionario();
+        ListagemFuncionario view = new ListagemFuncionario();
         jDesktopPane1.add(view);
         view.setVisible(true);
         view.setPosicao();

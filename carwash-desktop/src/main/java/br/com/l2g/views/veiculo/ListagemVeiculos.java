@@ -255,10 +255,8 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
                 objects[0] = v.getIdVeiculos();
                 objects[1] = v.getMerca();
                 objects[2] = v.getPlaca();
-
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
-
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);

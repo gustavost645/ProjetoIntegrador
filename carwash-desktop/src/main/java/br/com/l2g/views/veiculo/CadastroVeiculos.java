@@ -9,6 +9,7 @@ import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.cliente.CadastroCliente;
+import java.awt.Cursor;
 import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -29,7 +30,7 @@ import org.apache.http.entity.StringEntity;
  *
  * @author lucas
  */
-public class CadastroVeiculos extends javax.swing.JFrame {
+public class CadastroVeiculos extends javax.swing.JDialog {
 
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_VEICULO = URL_BASE + "veiculo";
@@ -39,7 +40,7 @@ public class CadastroVeiculos extends javax.swing.JFrame {
      * Creates new form CadastroVeiculos
      */
     public CadastroVeiculos(Frame parent, boolean modal, String operacao) {
-
+        super(parent, modal);
         initComponents();
         String viewTitulo = operacao.equals("incluir") ? "Cadastro de Veiculo" : "Alterar Veiculo";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
@@ -347,10 +348,15 @@ public class CadastroVeiculos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                System.exit(0);
-            }
+           java.awt.EventQueue.invokeLater(() -> {
+            CadastroVeiculos dialog = new CadastroVeiculos(new javax.swing.JFrame(), true, "");
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -417,7 +423,7 @@ public class CadastroVeiculos extends javax.swing.JFrame {
         veiculo.setMerca(veiculoText.getText().trim().toUpperCase());
         veiculo.setPlaca(placaText.getText().trim().toUpperCase());
 
-        veiculo.setIdVeiculos(MOVE_CURSOR);
+        veiculo.setIdVeiculos(Cursor.MOVE_CURSOR);
 
         return veiculo;
     }

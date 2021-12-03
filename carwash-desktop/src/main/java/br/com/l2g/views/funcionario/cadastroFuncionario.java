@@ -28,21 +28,23 @@ import org.apache.http.entity.StringEntity;
  *
  * @author lucas
  */
-public class cadastroFuncionario extends javax.swing.JFrame {
+public class CadastroFuncionario extends javax.swing.JDialog {
 
     /**
      * Creates new form listagemFuncionario
      */
-        private static final String URL_BASE = Environment.DEV.url();
-     private static final String URL_FUNCIONARIO = URL_BASE + "funcionario";
-    
-    public cadastroFuncionario(Frame parent, boolean modal, String operacao) {
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_FUNCIONARIO = URL_BASE + "funcionario";
+
+    public CadastroFuncionario(Frame parent, boolean modal, String operacao) {
+        super(parent, modal);
         initComponents();
         String viewTitulo = operacao.equals("incluir") ? "Cadastro de Funcionario" : "Alterar Funcionario";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
         this.setTitle(viewTitulo);
         buttonSalvar.setText(botaoTitulo);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +62,7 @@ public class cadastroFuncionario extends javax.swing.JFrame {
         codigoFuncionarioText = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         buttonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1479862814_Cancel.png"))); // NOI18N
         buttonCancelar.setText("Cancelar");
@@ -129,12 +131,12 @@ public class cadastroFuncionario extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addComponent(codigoFuncionarioText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoFuncionarioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,11 +144,11 @@ public class cadastroFuncionario extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonSalvar))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(7, 7, 7))
         );
 
         pack();
@@ -165,7 +167,7 @@ public class cadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSalvarFocusGained
 
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-      salvarFuncionario();
+        salvarFuncionario();
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
     private void nomeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeTextFocusGained
@@ -196,21 +198,23 @@ public class cadastroFuncionario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               
+
             }
         });
     }
@@ -224,57 +228,53 @@ public class cadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JTextField nomeText;
     // End of variables declaration//GEN-END:variables
 
- private void salvarFuncionario() {
+    private void salvarFuncionario() {
         try {
             HttpPost post = new HttpPost(URL_FUNCIONARIO);
             Funcionario funcionario = criaFuncionario();
             String jsonEnvio = Util.objectToJson(funcionario);
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, cadastroFuncionario.class));
+
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Funcionario.class));
+
             if (!retorno.isPresent()) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
-            
+
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(cadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private Funcionario criaFuncionario() {
         Funcionario funcionario = new Funcionario();
-        
-        if(!codigoFuncionarioText.getText().trim().isEmpty()){
+        if (!codigoFuncionarioText.getText().trim().isEmpty()) {
             funcionario.setIdFuncionario(Integer.parseInt(codigoFuncionarioText.getText().trim()));
         }
-        
-        funcionario.setNome(nomeText.getText().trim().toUpperCase());
-
-        return funcionario; 
+        funcionario.setNomeFuncionario(nomeText.getText().trim().toUpperCase());
+        return funcionario;
     }
 
- public void enviarCodigoSelecionado(String id) {
+    public void enviarCodigoSelecionado(String id) {
         try {
             String URL_PESQ = URL_FUNCIONARIO + "/" + id;
             HttpGet get = new HttpGet(URL_PESQ);
             String resposta = Util.enviaRequest(get);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, listagemFuncionario.class));
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Funcionario.class));
             if (retorno.isPresent()) {
                 Funcionario fluxo = (Funcionario) retorno.get();
-                
                 codigoFuncionarioText.setText(String.valueOf(fluxo.getIdFuncionario()));
-                nomeText.setText(fluxo.getNome());
-               
-              
-            } 
+                nomeText.setText(fluxo.getNomeFuncionario());
+            }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(cadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-}
+    }
 }

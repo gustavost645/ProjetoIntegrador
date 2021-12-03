@@ -8,7 +8,7 @@ package br.com.l2g.views.servicos;
 import br.com.l2g.model.Servicos;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
-import br.com.l2g.views.funcionario.cadastroFuncionario;
+import br.com.l2g.views.funcionario.CadastroFuncionario;
 import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -29,7 +29,7 @@ import org.apache.http.entity.StringEntity;
  *
  * @author lucas
  */
-public class CadastroServico extends javax.swing.JFrame {
+public class CadastroServico extends javax.swing.JDialog {
 
     /**
      * Creates new form CadastroServico
@@ -38,6 +38,7 @@ public class CadastroServico extends javax.swing.JFrame {
     private static final String URL_SERVICO = URL_BASE + "servico";
 
     public CadastroServico(Frame parent, boolean modal, String operacao) {
+        super(parent, modal);
         initComponents();
         String viewTitulo = operacao.equals("incluir") ? "Cadastro de Funcionario" : "Alterar Funcionario";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
@@ -61,7 +62,7 @@ public class CadastroServico extends javax.swing.JFrame {
         buttonSalvar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel10.setText("*Codigo:");
 
@@ -130,12 +131,12 @@ public class CadastroServico extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addComponent(codigoServicoText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoServicoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,8 +147,7 @@ public class CadastroServico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonSalvar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttonSalvar)))
         );
 
         pack();
@@ -272,7 +272,7 @@ public class CadastroServico extends javax.swing.JFrame {
             }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(cadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
