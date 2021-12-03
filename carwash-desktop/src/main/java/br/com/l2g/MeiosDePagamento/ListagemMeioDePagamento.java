@@ -72,11 +72,11 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Tipo Pagamento", "Data", "Valor", "Nome"
+                "Código", "Tipo Pagamento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, false
+                false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -262,9 +262,6 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
             for (FluxoDeCaixa f : fluxodecaixa) {
                 objects[0] = f.getIdPagamento();
                 objects[1] = f.getTipo();
-                objects[2] = f.getData();
-                objects[3] = f.getValor(); 
-                objects[4] = f.getNome(); 
               
 
                 Tmodel.addRow(objects);

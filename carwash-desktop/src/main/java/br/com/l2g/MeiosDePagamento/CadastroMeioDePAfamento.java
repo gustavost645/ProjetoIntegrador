@@ -53,38 +53,14 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ValorTX = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        nomeText = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         codigoCaixaText = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         buttonSalvar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jComboxMeioDePagamento = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        ValorTX.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                ValorTXFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ValorTXFocusLost(evt);
-            }
-        });
-
-        jLabel4.setText("*Valor :");
-
-        nomeText.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                nomeTextFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                nomeTextFocusLost(evt);
-            }
-        });
-
-        jLabel3.setText("*Nome Pessoa:");
 
         codigoCaixaText.setEditable(false);
         codigoCaixaText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
@@ -126,6 +102,15 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("*Toipo de Pagamento :");
+
+        jComboxMeioDePagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão Debito", "Cartão Credito", "Pix ", "Trasferencia Bancaria ", " " }));
+        jComboxMeioDePagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboxMeioDePagamentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,57 +123,36 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(buttonCancelar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4)
-                        .addComponent(ValorTX, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)
-                        .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addGap(18, 18, 18)
+                            .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jComboxMeioDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ValorTX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboxMeioDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonSalvar))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ValorTXFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorTXFocusGained
-        // TODO add your handling code here:   
-    }//GEN-LAST:event_ValorTXFocusGained
-
-    private void ValorTXFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorTXFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ValorTXFocusLost
-
-    private void nomeTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeTextFocusGained
-        nomeText.selectAll();
-    }//GEN-LAST:event_nomeTextFocusGained
-
-    private void nomeTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeTextFocusLost
-        if (nomeText.getText().trim().length() > 60) {
-            JOptionPane.showMessageDialog(null, "Nome da empresa exedeu o limite de 60 caracteres\nFavor abreviar o nome!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            nomeText.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_nomeTextFocusLost
 
     private void buttonSalvarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonSalvarFocusGained
         //
@@ -205,6 +169,10 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void jComboxMeioDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboxMeioDePagamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboxMeioDePagamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,14 +210,12 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ValorTX;
     private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonSalvar;
     private javax.swing.JFormattedTextField codigoCaixaText;
+    private javax.swing.JComboBox<String> jComboxMeioDePagamento;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField nomeText;
     // End of variables declaration//GEN-END:variables
 
   private void salvarFluxo() {
@@ -280,7 +246,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
             fluxo.setIdPagamento(Integer.parseInt(codigoCaixaText.getText().trim()));
         }
         
-        fluxo.setNome(nomeText.getText().trim().toUpperCase());
+        
         fluxo.setValor(URL_BASE);
         //terminar 
         return fluxo; 
@@ -296,8 +262,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
                 FluxoDeCaixa fluxo = (FluxoDeCaixa) retorno.get();
                 
                 codigoCaixaText.setText(String.valueOf(fluxo.getIdPagamento()));
-                nomeText.setText(fluxo.getNome());
-                ValorTX.setText(fluxo.getValor());
+               
               
             } 
 

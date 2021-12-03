@@ -131,6 +131,11 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
                 jTextField1FocusGained(evt);
             }
         });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -222,6 +227,10 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DeletarVeiculo();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        pesquisaPorColuna(title, WIDTH);
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
