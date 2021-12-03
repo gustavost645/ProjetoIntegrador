@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -255,14 +255,14 @@
                                           <Component id="CodigoDoPagamento" min="-2" pref="69" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cidadeIdText" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="dataPagamento" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="VallorPagamentoText" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Component id="ValorPagamentoText" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -292,7 +292,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="VallorPagamentoText" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ValorPagamentoText" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -304,7 +304,7 @@
                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cidadeIdText" min="-2" max="-2" attributes="0"/>
+                          <Component id="dataPagamento" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -316,9 +316,9 @@
                     <Property name="text" type="java.lang.String" value="*Codigo Pagamento:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="VallorPagamentoText">
+                <Component class="javax.swing.JTextField" name="ValorPagamentoText">
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VallorPagamentoTextActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ValorPagamentoTextActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
@@ -338,10 +338,10 @@
                     <Property name="text" type="java.lang.String" value="*Data: "/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="cidadeIdText">
+                <Component class="javax.swing.JTextField" name="dataPagamento">
                   <Events>
-                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cidadeIdTextFocusGained"/>
-                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cidadeIdTextFocusLost"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="dataPagamentoFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="dataPagamentoFocusLost"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="CodigoDoPagamento">

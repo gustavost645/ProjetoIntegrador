@@ -30,16 +30,16 @@ import org.apache.http.entity.StringEntity;
  */
 public class CadastroAgendamento extends javax.swing.JFrame {
 
-    
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_AGENDAMENTO = URL_BASE + "agendamento";
-   
+
     /**
      * Creates new form NewJFrame
      */
     public CadastroAgendamento(Frame parent, boolean modal, String operacao) {
         initComponents();
         initComponents();
+        limpaCamposAgenda();
         String viewTitulo = operacao.equals("incluir") ? "Cadastro de Clientes" : "Alterar Cliente";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
         this.setTitle(viewTitulo);
@@ -161,6 +161,11 @@ public class CadastroAgendamento extends javax.swing.JFrame {
         jLabel6.setText("* Hora  Inicial :");
 
         jFormattedTextHoraFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        jFormattedTextHoraFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextHoraFinalActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("* Hora Final :");
 
@@ -184,7 +189,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -206,7 +211,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
                                     .addComponent(codigoServico, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(codigoSetor, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(18, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -222,7 +227,6 @@ public class CadastroAgendamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(codigoSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -255,7 +259,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonSalvar))
@@ -284,6 +288,10 @@ public class CadastroAgendamento extends javax.swing.JFrame {
     private void codigoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoServicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codigoServicoActionPerformed
+
+    private void jFormattedTextHoraFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextHoraFinalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextHoraFinalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,7 +324,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               
+
             }
         });
     }
@@ -345,12 +353,15 @@ public class CadastroAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 
- private void limpaCamposAgenda() {
-     
-//   cidadeIdText.setText("");
-  //      nomeCidadeText.setText("");
-    //    estadoText.setText("");
- }
+    private void limpaCamposAgenda() {
+
+        codigoAgendamento.setText("");
+        codigoSetor.setText("");
+        codigoFuncionario.setText("");
+        codigoServico.setText("");
+        jFormattedTextHoraInicial.setText("");
+        jFormattedTextHoraFinal.setText("");
+    }
 
     private void salvarAgendamento() {
         try {
@@ -376,27 +387,18 @@ public class CadastroAgendamento extends javax.swing.JFrame {
     private Agendamento criaAgendamento() {
         Agendamento agenda = new Agendamento();
         agenda.setIdAgendamento(Integer.parseInt(codigoAgendamento.getText().trim()));
-        agenda.setIdFuncionario(Integer.parseInt(codigoFuncionario.getText().trim()));
-       // agenda.setIdTipo(Integer.parseInt(codigoTipo.getText().trim()));
-        agenda.setIdSetor(Integer.parseInt(codigoSetor.getText().trim()));
-       // agenda.setDataInicial(();
-      // agenda.setDataFinal(DataFinal);
-        
-      
-
-        
-
+       
+        // agenda.setIdTipo(Integer.parseInt(codigoTipo.getText().trim()));
+        //agenda.setDataInicial(());
+        // agenda.setDataFinal(DataFinal);
         if (!codigoAgendamento.getText().trim().isEmpty()) {
             agenda.setIdAgendamento(Integer.parseInt(codigoAgendamento.getText().trim()));
         }
 
-        
-   //     agenda.setNome(nomeText.getText().trim().toUpperCase());
-      //  agenda.setEndereco(logradouroText.getText().trim().toUpperCase());
-     //   agenda.setNumero(numeroText.getText().trim().toUpperCase());
-      
-       // agenda.setCidade(cidade);
-
+        //     agenda.setNome(nomeText.getText().trim().toUpperCase());
+        //  agenda.setEndereco(logradouroText.getText().trim().toUpperCase());
+        //   agenda.setNumero(numeroText.getText().trim().toUpperCase());
+        // agenda.setCidade(cidade);
         return agenda;
     }
 
@@ -410,11 +412,10 @@ public class CadastroAgendamento extends javax.swing.JFrame {
                 Agendamento agenda = (Agendamento) retorno.get();
 
                 codigoAgendamento.setText(String.valueOf(agenda.getIdAgendamento()));
-                
-         //       nomeText.setText(agenda.getDataFinal());
-          //      logradouroText.setText(agenda.getEndereco());
-          //      numeroText.setText(agenda.getNumero());
-               
+
+                //       nomeText.setText(agenda.getDataFinal());
+                //      logradouroText.setText(agenda.getEndereco());
+                //      numeroText.setText(agenda.getNumero());
             }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
@@ -422,7 +423,5 @@ public class CadastroAgendamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 
 }

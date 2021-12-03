@@ -44,7 +44,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jComboBoxStatus" max="32767" attributes="0"/>
+                      <Component id="jComboBoxStatus" min="-2" pref="120" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -73,7 +73,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
@@ -96,7 +96,6 @@
                   <Component id="codigoAgendamento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="codigoSetor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -140,7 +139,7 @@
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="buttonCancelar" alignment="0" max="32767" attributes="0"/>
                   <Component id="buttonSalvar" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -300,6 +299,9 @@
           <Format subtype="1" type="2"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFormattedTextHoraFinalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>

@@ -5,6 +5,27 @@
  */
 package br.com.l2g.views.Movimento;
 
+import br.com.l2g.model.Agendamento;
+import br.com.l2g.model.FluxoDeCaixa;
+import br.com.l2g.model.Movimento;
+import br.com.l2g.util.Environment;
+import br.com.l2g.util.Util;
+import java.awt.Frame;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
+import org.apache.http.HttpException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+
 /**
  *
  * @author lucas
@@ -14,8 +35,16 @@ public class CadastroMovimento extends javax.swing.JFrame {
     /**
      * Creates new form CadastroMovimento
      */
-    public CadastroMovimento() {
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_MOVIMENTO = URL_BASE + "movimento";
+
+    public CadastroMovimento(Frame parent, boolean modal, String operacao) {
+        // super(parent, modal);
         initComponents();
+        String viewTitulo = operacao.equals("incluir") ? "Cadastro de Movimento" : "Alterar Movimento";
+        String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
+        this.setTitle(viewTitulo);
+        buttonSalvar.setText(botaoTitulo);
     }
 
     /**
@@ -39,12 +68,12 @@ public class CadastroMovimento extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        VallorPagamentoText = new javax.swing.JTextField();
+        ValorPagamentoText = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TipodePagemento = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        cidadeIdText = new javax.swing.JTextField();
+        dataPagamento = new javax.swing.JTextField();
         CodigoDoPagamento = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -104,9 +133,9 @@ public class CadastroMovimento extends javax.swing.JFrame {
 
         jLabel6.setText("*Codigo Pagamento:");
 
-        VallorPagamentoText.addActionListener(new java.awt.event.ActionListener() {
+        ValorPagamentoText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VallorPagamentoTextActionPerformed(evt);
+                ValorPagamentoTextActionPerformed(evt);
             }
         });
 
@@ -116,12 +145,12 @@ public class CadastroMovimento extends javax.swing.JFrame {
 
         jLabel13.setText("*Data: ");
 
-        cidadeIdText.addFocusListener(new java.awt.event.FocusAdapter() {
+        dataPagamento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                cidadeIdTextFocusGained(evt);
+                dataPagamentoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                cidadeIdTextFocusLost(evt);
+                dataPagamentoFocusLost(evt);
             }
         });
 
@@ -150,12 +179,12 @@ public class CadastroMovimento extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(CodigoDoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel13)
-                            .addComponent(cidadeIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(VallorPagamentoText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ValorPagamentoText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -177,7 +206,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(VallorPagamentoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ValorPagamentoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -186,7 +215,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cidadeIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -365,7 +394,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        listarPlaca();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void PlacaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlacaVeiculoActionPerformed
@@ -380,20 +409,20 @@ public class CadastroMovimento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PlacaVeiculoFocusGained
 
-    private void VallorPagamentoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VallorPagamentoTextActionPerformed
+    private void ValorPagamentoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorPagamentoTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_VallorPagamentoTextActionPerformed
+    }//GEN-LAST:event_ValorPagamentoTextActionPerformed
 
-    private void cidadeIdTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cidadeIdTextFocusGained
-        cidadeIdText.selectAll();
-    }//GEN-LAST:event_cidadeIdTextFocusGained
+    private void dataPagamentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dataPagamentoFocusGained
 
-    private void cidadeIdTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cidadeIdTextFocusLost
-      
-    }//GEN-LAST:event_cidadeIdTextFocusLost
+    }//GEN-LAST:event_dataPagamentoFocusGained
+
+    private void dataPagamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dataPagamentoFocusLost
+
+    }//GEN-LAST:event_dataPagamentoFocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+        listarTipoDePagamento();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void buttonSalvarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonSalvarFocusGained
@@ -401,7 +430,13 @@ public class CadastroMovimento extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSalvarFocusGained
 
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-      
+        try {
+            salvarMovimento();
+        } catch (IOException ex) {
+            Logger.getLogger(CadastroMovimento.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HttpException ex) {
+            Logger.getLogger(CadastroMovimento.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
     private void buttonCancelarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonCancelarFocusGained
@@ -454,7 +489,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroMovimento().setVisible(true);
+
             }
         });
     }
@@ -465,12 +500,12 @@ public class CadastroMovimento extends javax.swing.JFrame {
     private javax.swing.JTextField ObsText;
     private javax.swing.JTextField PlacaVeiculo;
     private javax.swing.JTextField TipodePagemento;
-    private javax.swing.JTextField VallorPagamentoText;
+    private javax.swing.JTextField ValorPagamentoText;
     private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JTextField cidadeIdText;
     private javax.swing.JFormattedTextField codigoAgendaTex;
     private javax.swing.JFormattedTextField codigoCMovimentoText;
+    private javax.swing.JTextField dataPagamento;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
@@ -487,4 +522,92 @@ public class CadastroMovimento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void limpaCamposMovimento() {
+        codigoCMovimentoText.setText("");
+        PlacaVeiculo.setText("");
+        NomeCliente.setText("");
+        ObsText.setText("");
+    }
+
+    private void salvarMovimento() throws IOException, HttpException {
+        try {
+            HttpPost post = new HttpPost(URL_MOVIMENTO);
+            Movimento movi = criarMovimento();
+            String jsonEnvio = Util.objectToJson(movi);
+            post.setEntity(new StringEntity(jsonEnvio));
+            String jsonResposta = Util.enviaRequest(post);
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Movimento.class));
+            if (!retorno.isPresent()) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+
+        } catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(CadastroMovimento.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Movimento criarMovimento() {
+        Movimento movimento = new Movimento();
+        Agendamento agenda = new Agendamento();
+        FluxoDeCaixa flux = new FluxoDeCaixa();
+
+        movimento.setIdMovimento(Integer.parseInt(codigoCMovimentoText.getText().trim()));
+
+        agenda.setIdAgendamento(Integer.parseInt(codigoAgendaTex.getText().trim()));
+
+        movimento.setPlaca(PlacaVeiculo.getText().trim());
+        movimento.setNomeCliente(NomeCliente.getText().trim());
+
+        flux.setIdPagamento(Integer.parseInt(CodigoDoPagamento.getText().trim()));
+        flux.setValor(ValorPagamentoText.getText().trim());
+        flux.setTipo(TipodePagemento.getText().trim());
+        flux.setData(dataPagamento.getText().trim());
+
+        movimento.setObservacao(ObsText.getText().trim());
+
+        return movimento;
+    }
+
+    public void enviarCodigoSelecionado(String id) {
+        try {
+            String URL_PESQ = URL_MOVIMENTO + "/" + id;
+            HttpGet get = new HttpGet(URL_PESQ);
+            String resposta = Util.enviaRequest(get);
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Movimento.class));
+            if (retorno.isPresent()) {
+                Movimento movimento = (Movimento) retorno.get();
+                Agendamento agenda = (Agendamento) retorno.get();
+                FluxoDeCaixa flux = (FluxoDeCaixa) retorno.get();
+
+                codigoCMovimentoText.setText(String.valueOf(movimento.getIdMovimento()));
+                codigoAgendaTex.setText(String.valueOf(agenda.getIdAgendamento()));
+                PlacaVeiculo.setText(movimento.getPlaca());
+                NomeCliente.setText(movimento.getNomeCliente());
+                CodigoDoPagamento.setText(String.valueOf(flux.getIdPagamento()));
+                ValorPagamentoText.setText(flux.getValor());
+                TipodePagemento.setText(flux.getTipo());
+                dataPagamento.setText(flux.getData());
+                ObsText.setText(movimento.getObservacao());
+
+            }
+
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(CadastroMovimento.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void listarTipoDePagamento() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listarPlaca() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

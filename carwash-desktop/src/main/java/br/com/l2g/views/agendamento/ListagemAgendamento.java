@@ -231,7 +231,7 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
 
-// NÃO ESTA PRONTO FALATA FINALIZAR 
+
     private void CarregaTabela() {
         try {
             limpaTabela();
@@ -243,8 +243,13 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
             String resposta = Util.enviaRequest(get);
             List<Agendamento> agendamentoList = Arrays.asList(Util.jsonToObject(resposta, Agendamento[].class));
             for (Agendamento a : agendamentoList) {
-                objects[0] = a.getDataFinal();
-                objects[1] = a.getDataFinal();
+                objects[0] = a.getIdAgendamento();
+                objects[1] = a.getNome();
+                objects[2] = a.getPlaca();
+                objects[3] = a.getTipo();
+                objects[4] = a.getDataFinal();
+                objects[5] = a.getDataFinal();
+                objects[6] = a.getStatus(); 
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
