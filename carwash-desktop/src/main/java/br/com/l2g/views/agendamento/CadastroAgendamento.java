@@ -394,8 +394,8 @@ public class CadastroAgendamento extends javax.swing.JFrame {
         agenda.setIdAgendamento(Integer.parseInt(codigoAgendamento.getText().trim()));
         fun.setIdFuncionario(Integer.parseInt(codigoFuncionario.getText().trim())); 
         ser.setIdServico(Integer.parseInt(codigoServico.getText().trim()));
-        agenda.setDataInicial((""));
-        agenda.setDataFinal((""));
+        //agenda.setDataInicial((""));
+        //agenda.setDataFinal((""));
         agenda.setStatus(jComboBoxStatus.getSelectedItem(). toString());
 
         
