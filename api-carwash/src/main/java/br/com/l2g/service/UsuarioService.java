@@ -38,6 +38,8 @@ public class UsuarioService {
         return repository.findById(idUsuario);
     }
     
-    
+    public Usuario listarPorLogin(String login){
+        return repository.findBylogin(login);
+    }
 
 }
