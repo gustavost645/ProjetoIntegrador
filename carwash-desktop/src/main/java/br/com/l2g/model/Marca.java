@@ -20,10 +20,9 @@ import lombok.ToString;
  *
  * @author lucas
  */
-public class Veiculo {
-
-    private Integer idVeiculo;
-    private Marca marca;
-    private String placa;
+public class Marca {
+    
+    private Integer idMarca;
+    private String nomeMarca;
 
 }

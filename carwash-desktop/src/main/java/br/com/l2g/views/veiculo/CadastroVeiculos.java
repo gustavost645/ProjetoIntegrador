@@ -5,6 +5,7 @@
  */
 package br.com.l2g.views.veiculo;
 
+import br.com.l2g.model.Marca;
 import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
@@ -22,7 +23,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 import org.apache.http.HttpException;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
@@ -34,10 +34,10 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_VEICULO = URL_BASE + "veiculo";
-    private static final String URL_CIDADE = URL_BASE + "cidade";
 
     /**
      * Creates new form CadastroVeiculos
+     *
      * @param parent
      * @param modal
      * @param operacao
@@ -61,34 +61,30 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel11 = new javax.swing.JLabel();
-        codigoveiculoText1 = new javax.swing.JFormattedTextField();
+        codigoVeiculo = new javax.swing.JFormattedTextField();
         buttonSalvar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        veiculoText = new javax.swing.JTextField();
+        modeloVeiculo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        PlacaVeiculoText = new javax.swing.JTextField();
+        placaVeiculo = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        complementoText = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        bairroText = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        placaText = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        nomeMarca = new javax.swing.JTextField();
+        marcaVeiculo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro De Veiculos");
 
         jLabel11.setText("*Codigo:");
 
-        codigoveiculoText1.setEditable(false);
-        codigoveiculoText1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
-        codigoveiculoText1.setEnabled(false);
-        codigoveiculoText1.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
-        codigoveiculoText1.setFocusable(false);
+        codigoVeiculo.setEditable(false);
+        codigoVeiculo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
+        codigoVeiculo.setEnabled(false);
+        codigoVeiculo.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        codigoVeiculo.setFocusable(false);
 
         buttonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1480357534_free-05.png"))); // NOI18N
         buttonSalvar.setText("Salvar");
@@ -114,99 +110,31 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
         jLabel3.setText("*Modelo Veiculo:");
 
-        veiculoText.addFocusListener(new java.awt.event.FocusAdapter() {
+        modeloVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                veiculoTextFocusGained(evt);
+                modeloVeiculoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                veiculoTextFocusLost(evt);
+                modeloVeiculoFocusLost(evt);
             }
         });
 
         jLabel4.setText("*Placa Veiculo : ");
 
-        PlacaVeiculoText.addFocusListener(new java.awt.event.FocusAdapter() {
+        placaVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                PlacaVeiculoTextFocusGained(evt);
+                placaVeiculoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                PlacaVeiculoTextFocusLost(evt);
+                placaVeiculoFocusLost(evt);
             }
         });
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Veiculo"));
-
         jLabel8.setText("Marca :");
 
         jLabel9.setText("*Modelo :");
-
-        jLabel12.setText("Placa Veiculo");
-
-        placaText.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                placaTextFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                placaTextFocusLost(evt);
-            }
-        });
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/2943_16x16.png"))); // NOI18N
-        jButton1.setToolTipText("Pesquisar Cep");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8)
-                            .addComponent(complementoText, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(placaText)
-                                .addGap(38, 38, 38)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(bairroText, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 25, Short.MAX_VALUE))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(complementoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bairroText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(placaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,19 +142,27 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(marcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(marcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
-
-        jPanel2.getAccessibleContext().setAccessibleName("");
-        jPanel2.getAccessibleContext().setAccessibleDescription("");
 
         jTabbedPane1.addTab("Informações Gerais", jPanel1);
         jPanel1.getAccessibleContext().setAccessibleName("Veiculos");
@@ -237,21 +173,20 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(codigoveiculoText1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(veiculoText, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(PlacaVeiculoText, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonCancelar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel11)
+                        .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(modeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonCancelar)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,18 +194,18 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(codigoveiculoText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(veiculoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(modeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PlacaVeiculoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonCancelar)
                     .addComponent(buttonSalvar))
@@ -289,39 +224,27 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
-    private void veiculoTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_veiculoTextFocusGained
-        veiculoText.selectAll();
-    }//GEN-LAST:event_veiculoTextFocusGained
+    private void placaVeiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaVeiculoFocusGained
+        placaVeiculo.selectAll();
+    }//GEN-LAST:event_placaVeiculoFocusGained
 
-    private void veiculoTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_veiculoTextFocusLost
-        if (veiculoText.getText().trim().length() > 60) {
+    private void placaVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaVeiculoFocusLost
+        if (placaVeiculo.getText().trim().length() > 60) {
             JOptionPane.showMessageDialog(null, "Nome da empresa exedeu o limite de 60 caracteres\nFavor abreviar o nome!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            veiculoText.requestFocusInWindow();
+            placaVeiculo.requestFocusInWindow();
         }
-    }//GEN-LAST:event_veiculoTextFocusLost
+    }//GEN-LAST:event_placaVeiculoFocusLost
 
-    private void PlacaVeiculoTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PlacaVeiculoTextFocusGained
-        PlacaVeiculoText.selectAll();
-    }//GEN-LAST:event_PlacaVeiculoTextFocusGained
-
-    private void PlacaVeiculoTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PlacaVeiculoTextFocusLost
-        if (PlacaVeiculoText.getText().trim().length() > 60) {
+    private void modeloVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_modeloVeiculoFocusLost
+        if (modeloVeiculo.getText().trim().length() > 60) {
             JOptionPane.showMessageDialog(null, "Nome da empresa exedeu o limite de 60 caracteres\nFavor abreviar o nome!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            PlacaVeiculoText.requestFocusInWindow();
+            modeloVeiculo.requestFocusInWindow();
         }
-    }//GEN-LAST:event_PlacaVeiculoTextFocusLost
+    }//GEN-LAST:event_modeloVeiculoFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        listarVeiculos();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void placaTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaTextFocusLost
-
-    }//GEN-LAST:event_placaTextFocusLost
-
-    private void placaTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaTextFocusGained
-        placaText.selectAll();
-    }//GEN-LAST:event_placaTextFocusGained
+    private void modeloVeiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_modeloVeiculoFocusGained
+        modeloVeiculo.selectAll();
+    }//GEN-LAST:event_modeloVeiculoFocusGained
 
     /**
      * @param args the command line arguments
@@ -351,7 +274,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the form */
-           java.awt.EventQueue.invokeLater(() -> {
+        java.awt.EventQueue.invokeLater(() -> {
             CadastroVeiculos dialog = new CadastroVeiculos(new javax.swing.JFrame(), true, "");
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -364,39 +287,38 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField PlacaVeiculoText;
-    private javax.swing.JTextField bairroText;
     private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JFormattedTextField codigoveiculoText1;
-    private javax.swing.JTextField complementoText;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JFormattedTextField codigoVeiculo;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField placaText;
-    private javax.swing.JTextField veiculoText;
+    private javax.swing.JTextField marcaVeiculo;
+    private javax.swing.JTextField modeloVeiculo;
+    private javax.swing.JTextField nomeMarca;
+    private javax.swing.JTextField placaVeiculo;
     // End of variables declaration//GEN-END:variables
 
     private void limpaCamposveiculos() {
-        codigoveiculoText1.setText("");
-        veiculoText.setText("");
-        placaText.setText("");
+        codigoVeiculo.setText("");
+        modeloVeiculo.setText("");
+        placaVeiculo.setText("");
     }
 
     private void salvarVeiculo() {
         try {
             HttpPost post = new HttpPost(URL_VEICULO);
-            Veiculo empresa = criarVeiculo();
-            String jsonEnvio = Util.objectToJson(empresa);
+            Veiculo v = criarVeiculo();
+            String jsonEnvio = Util.objectToJson(v);
+            System.out.println("jsonEnvio--->" + jsonEnvio);
+
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
+            System.out.println("jsonResposta--->" + jsonResposta);
             Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Veiculo.class));
             if (!retorno.isPresent()) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -404,50 +326,38 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
-
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(CadastroVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private Veiculo criarVeiculo() {
         Veiculo veiculo = new Veiculo();
-        veiculo.setIdVeiculos(Integer.parseInt(codigoveiculoText1.getText().trim()));
-        veiculo.setMerca(veiculoText.getText().trim());
-        veiculo.setPlaca(placaText.getText().trim());
-
-        Veiculo cliente = new Veiculo();
-
-        if (!codigoveiculoText1.getText().trim().isEmpty()) {
-            cliente.setIdVeiculos(Integer.parseInt(codigoveiculoText1.getText().trim()));
+        if (!codigoVeiculo.getText().trim().isEmpty()) {
+            veiculo.setIdVeiculo(Integer.parseInt(codigoVeiculo.getText().trim()));
         }
-
-        veiculo.setMerca(veiculoText.getText().trim().toUpperCase());
-        veiculo.setPlaca(placaText.getText().trim().toUpperCase());
-
-        veiculo.setIdVeiculos(Cursor.MOVE_CURSOR);
-
+        Marca marca = new Marca();
+        marca.setIdMarca(Integer.parseInt(marcaVeiculo.getText().trim()));
+        veiculo.setMarca(marca);
+       
+        veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
         return veiculo;
-    }
-
-    private void listarVeiculos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void enviarCodigoSelecionado(String id) throws IOException, HttpException, NoSuchPaddingException {
         try {
-            String URL_PESQ = URL_VEICULO + "/" + id;
-            HttpGet get = new HttpGet(URL_PESQ);
-            String resposta = Util.enviaRequest(get);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Veiculo.class));
+            HttpPost post = new HttpPost(URL_VEICULO);
+            Veiculo v = criarVeiculo();
+            String jsonEnvio = Util.objectToJson(v);
+            post.setEntity(new StringEntity(jsonEnvio));
+            String jsonResposta = Util.enviaRequest(post);
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Veiculo.class));
             if (retorno.isPresent()) {
                 Veiculo veiculo = (Veiculo) retorno.get();
-
-                codigoveiculoText1.setText(String.valueOf(veiculo.getIdVeiculos()));
-                veiculoText.setText(veiculo.getMerca());
-                placaText.setText(veiculo.getPlaca());
-
+                codigoVeiculo.setText(String.valueOf(veiculo.getIdVeiculo()));
+                modeloVeiculo.setText(veiculo.getMarca().getIdMarca().toString());
+                placaVeiculo.setText(veiculo.getPlaca());
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);

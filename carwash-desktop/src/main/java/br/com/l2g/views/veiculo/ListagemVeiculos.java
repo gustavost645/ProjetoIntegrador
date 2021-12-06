@@ -260,8 +260,8 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
             String resposta = Util.enviaRequest(get);
             List<Veiculo> veiculoLis = Arrays.asList(Util.jsonToObject(resposta, Veiculo[].class));
             for (Veiculo v : veiculoLis) {
-                objects[0] = v.getIdVeiculos();
-                objects[1] = v.getMerca();
+                objects[0] = v.getIdVeiculo();
+                objects[1] = v.getMarca().getNomeMarca();
                 objects[2] = v.getPlaca();
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);

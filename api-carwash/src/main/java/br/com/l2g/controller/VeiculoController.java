@@ -45,8 +45,10 @@ public class VeiculoController {
 
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Veiculo veiculo) {
-        try {
-            veiculoService.salvar(veiculo);
+        try {          
+            
+            System.out.println(veiculo.toString());
+            veiculoService.salvar(veiculo);                                    
             return ResponseEntity.ok(veiculo);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());

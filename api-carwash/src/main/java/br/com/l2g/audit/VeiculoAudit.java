@@ -19,31 +19,31 @@ public class VeiculoAudit {
     @PrePersist
     @PreUpdate
     private void beforeUpdate(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] About to update: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] About to update: " + o.getIdVeiculo());
     }
 
     @PreRemove
     private void beforeRemove(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] About to delete: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] About to delete: " + o.getIdVeiculo());
     }
 
     @PostPersist
     private void afterAdd(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] add complete for: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] add complete for: " + o.getIdVeiculo());
     }
 
     @PostRemove
     private void afterDelete(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] delete complete for: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] delete complete for: " + o.getIdVeiculo());
     }
 
     @PostUpdate
     private void afterUpdate(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] update complete for: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] update complete for: " + o.getIdVeiculo());
     }
     
     @PostLoad
     private void afterLoad(Veiculo o) {
-        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] search: " + o.getIdVeiculos());
+        Utilitarios.salvaTxt("log.txt", Utilitarios.dataHora()+ " - [VEICULO AUDIT] search: " + o.getIdVeiculo());
     }
 }

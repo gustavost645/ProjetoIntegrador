@@ -30,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EntityListeners(VeiculoAudit.class)
+@EntityListeners(VeiculoAudit.class)                   
 @SequenceGenerator(name = "VeiculoSeq", sequenceName = "veiculos_vei_codigo_seq", allocationSize = 1)
 @Table(name = "veiculos")
 public class Veiculo implements Serializable {
@@ -39,11 +39,11 @@ public class Veiculo implements Serializable {
     @Id
     @GeneratedValue(generator = "VeiculoSeq", strategy = GenerationType.SEQUENCE)
     @Column(name="vei_codigo")
-    private Integer idVeiculos;
+    private Integer idVeiculo;
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vei_cd_marca", nullable=false)
-    private Marca marca;
+    private Marca marca;   
     
     @Column(name="vei_placa")
     private String placa;

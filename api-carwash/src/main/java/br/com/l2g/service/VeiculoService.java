@@ -19,18 +19,18 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class VeiculoService {
-    
+
     private final VeiculoRepository repository;
 
-    public Veiculo salvar(Veiculo veiculo){
+    public Veiculo salvar(Veiculo veiculo) {
         return repository.save(veiculo);
     }
 
-    public void deletar(Integer idVeiculo){
+    public void deletar(Integer idVeiculo) {
         repository.deleteById(idVeiculo);
     }
 
-    public List<Veiculo> listarTudo(){
+    public List<Veiculo> listarTudo() {
         return repository.findAll();
     }
 
