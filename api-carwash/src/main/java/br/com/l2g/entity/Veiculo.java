@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -41,8 +42,10 @@ public class Veiculo implements Serializable {
     @Column(name="vei_codigo")
     private Integer idVeiculo;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="vei_cd_marca", nullable=false)
+    //@ManyToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name="vei_cd_marca", nullable=false)
+    @OneToOne()
+    @JoinColumn(name="vei_cd_marca", referencedColumnName = "mar_codigo")    
     private Marca marca;   
     
     @Column(name="vei_placa")
