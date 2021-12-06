@@ -5,6 +5,9 @@
  */
 package br.com.l2g.util;
 
+import br.com.l2g.model.Permissao;
+import br.com.l2g.model.Usuario;
+import br.com.l2g.views.funcionario.ListagemFuncionario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,6 +21,9 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -27,10 +33,11 @@ import org.apache.http.util.EntityUtils;
 
 /**
  *
- * @author Gustavo Steinhoefel
- * teste
+ * @author Gustavo Steinhoefel teste
  */
 public class Util {
+
+    private static boolean permissao = false;
 
     public static String objectToJson(Object objeto) throws JsonProcessingException {
         return new ObjectMapper().registerModule(new JavaTimeModule())
@@ -80,5 +87,21 @@ public class Util {
         }
         return md5;
     }
-    
+
+    public static boolean validaPermissaoAcesso(Usuario usuarioTelaPrincipal, String nomeClasse, JButton jButton1, JButton jButton2, JButton jButton3) {
+        permissao = false;
+        for (Permissao p : usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()) {
+            if (p.getClasseNome().contains(nomeClasse) && p.getPermissaoListar()) {
+                jButton1.setEnabled(p.getPermissaoSalvar());
+                jButton2.setEnabled(p.getPermissaoAlterar());
+                jButton3.setEnabled(p.getPermissaoExcluir());
+                permissao = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+        return permissao;
+    }
+
 }

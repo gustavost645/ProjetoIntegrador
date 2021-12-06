@@ -87,5 +87,16 @@ public class UsuarioController {
         }
         return Status.FAILURE;
     }
+    
+    @GetMapping("/login/{login}")
+    public ResponseEntity<?> listarPorUser(@PathVariable("login") String idUsuario) {
+        try {
+            Usuario lista = usuarioService.listarPorLogin(idUsuario);
+            log.info(lista.toString());
+            return ResponseEntity.ok(lista);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
 
 }

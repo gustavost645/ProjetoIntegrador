@@ -79,7 +79,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
         jFormattedTextHoraFinal = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel10.setText("*Codigo Agendamento :");
 
@@ -269,6 +269,7 @@ public class CadastroAgendamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonSalvarFocusGained

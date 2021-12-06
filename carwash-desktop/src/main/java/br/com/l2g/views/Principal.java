@@ -5,28 +5,49 @@
  */
 package br.com.l2g.views;
 
-import br.com.l2g.MeiosDePagamento.ListagemMeioDePagamento;
+import br.com.l2g.model.Usuario;
+import br.com.l2g.util.Environment;
+import br.com.l2g.util.Util;
+import br.com.l2g.views.MeiosDePagamento.ListagemMeioDePagamento;
 import br.com.l2g.views.Movimento.ListageMovimento;
 import br.com.l2g.views.Sobre.Sobre;
 import br.com.l2g.views.agendamento.ListagemAgendamento;
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
-import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
 import br.com.l2g.views.funcionario.ListagemFuncionario;
 import br.com.l2g.views.servicos.ListagemServico;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.http.client.methods.HttpGet;
 
 /**
  *
  * @author Gustavo Steinhoefel
  */
 public class Principal extends javax.swing.JFrame {
+    
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_USUARIO = URL_BASE + "usuario/login/";
+    private Usuario usuarioTelaPrincipal;
 
     /**
      * Creates new form Principal
+     * @param user
      */
-    public Principal() {
-        initComponents();
+
+    public Principal(Usuario user) {
+        try {
+            initComponents();
+            HttpGet get = new HttpGet(URL_USUARIO+user.getLogin());
+            String resposta = Util.enviaRequest(get);
+            usuarioTelaPrincipal = Util.jsonToObject(resposta, Usuario.class);
+            
+            System.out.println(usuarioTelaPrincipal.toString());
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -41,6 +62,12 @@ public class Principal extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btnCliente = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
+        btnCliente1 = new javax.swing.JButton();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
+        btnCliente2 = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JToolBar.Separator();
+        btnCliente3 = new javax.swing.JButton();
+        jSeparator10 = new javax.swing.JToolBar.Separator();
         jPanel2 = new javax.swing.JPanel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
@@ -60,9 +87,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -91,6 +116,57 @@ public class Principal extends javax.swing.JFrame {
         });
         jToolBar1.add(btnCliente);
         jToolBar1.add(jSeparator1);
+
+        btnCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/front_car_vehicle_transport_icon_123462(1).png"))); // NOI18N
+        btnCliente1.setText("Veículos");
+        btnCliente1.setFocusable(false);
+        btnCliente1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCliente1.setMaximumSize(new java.awt.Dimension(87, 57));
+        btnCliente1.setMinimumSize(new java.awt.Dimension(87, 57));
+        btnCliente1.setPreferredSize(new java.awt.Dimension(57, 57));
+        btnCliente1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnCliente1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCliente1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCliente1);
+        jToolBar1.add(jSeparator8);
+
+        btnCliente2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Driver-License_Male-32.png"))); // NOI18N
+        btnCliente2.setText("Agendamento");
+        btnCliente2.setFocusable(false);
+        btnCliente2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCliente2.setMaximumSize(new java.awt.Dimension(87, 57));
+        btnCliente2.setMinimumSize(new java.awt.Dimension(87, 57));
+        btnCliente2.setPreferredSize(new java.awt.Dimension(57, 57));
+        btnCliente2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnCliente2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCliente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCliente2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCliente2);
+        jToolBar1.add(jSeparator9);
+
+        btnCliente3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1485374000_Mastercard.png"))); // NOI18N
+        btnCliente3.setText("Caixa");
+        btnCliente3.setFocusable(false);
+        btnCliente3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCliente3.setMaximumSize(new java.awt.Dimension(87, 57));
+        btnCliente3.setMinimumSize(new java.awt.Dimension(87, 57));
+        btnCliente3.setPreferredSize(new java.awt.Dimension(57, 57));
+        btnCliente3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnCliente3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCliente3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCliente3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCliente3);
+        jToolBar1.add(jSeparator10);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -196,7 +272,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem6);
         jMenu5.add(jSeparator5);
 
-        jMenuItem12.setText("Movimento");
+        jMenuItem12.setText("Caixa");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -204,23 +280,17 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem12);
 
-        jMenuItem7.setText("Fluxo de Caixa");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem7);
-
         jMenuBar1.add(jMenu5);
 
         jMenu2.setText("Configurações");
-
-        jMenuItem8.setText("Empresa");
-        jMenu2.add(jMenuItem8);
         jMenu2.add(jSeparator6);
 
         jMenuItem9.setText("Usuarios");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem9);
 
         jMenuBar1.add(jMenu2);
@@ -265,18 +335,10 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        ListagemCliente view = new ListagemCliente();
+        ListagemCliente view = new ListagemCliente(usuarioTelaPrincipal);
         jDesktopPane1.add(view);
-        view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_btnClienteActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-          ListagemCaixa view = new ListagemCaixa();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         ListagemCidade view = new ListagemCidade();
@@ -286,9 +348,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ListagemCliente view = new ListagemCliente();
+        ListagemCliente view = new ListagemCliente(usuarioTelaPrincipal);
         jDesktopPane1.add(view);
-        view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -300,14 +361,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        ListagemFuncionario view = new ListagemFuncionario();
+        ListagemFuncionario view = new ListagemFuncionario(usuarioTelaPrincipal);
         jDesktopPane1.add(view);
-        view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         ListagemServico view = new ListagemServico();
+        ListagemServico view = new ListagemServico();
         jDesktopPane1.add(view);
         view.setVisible(true);
         view.setPosicao();
@@ -328,56 +388,50 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-       ListagemAgendamento view = new ListagemAgendamento();
+        ListagemAgendamento view = new ListagemAgendamento();
         jDesktopPane1.add(view);
         view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-      ListageMovimento view = new ListageMovimento();
+        ListageMovimento view = new ListageMovimento();
         jDesktopPane1.add(view);
         view.setVisible(true);
         view.setPosicao();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente1ActionPerformed
+        ListagemVeiculos view = new ListagemVeiculos();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao(); 
+    }//GEN-LAST:event_btnCliente1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
+    private void btnCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente2ActionPerformed
+        ListagemAgendamento view = new ListagemAgendamento();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_btnCliente2ActionPerformed
+
+    private void btnCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente3ActionPerformed
+        ListageMovimento view = new ListageMovimento();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }//GEN-LAST:event_btnCliente3ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnCliente1;
+    private javax.swing.JButton btnCliente2;
+    private javax.swing.JButton btnCliente3;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
@@ -395,17 +449,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
