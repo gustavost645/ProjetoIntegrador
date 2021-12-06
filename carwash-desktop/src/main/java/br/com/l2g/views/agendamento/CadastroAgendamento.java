@@ -6,6 +6,8 @@
 package br.com.l2g.views.agendamento;
 
 import br.com.l2g.model.Agendamento;
+import br.com.l2g.model.Funcionario;
+import br.com.l2g.model.Servicos;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Frame;
@@ -386,19 +388,17 @@ public class CadastroAgendamento extends javax.swing.JFrame {
 
     private Agendamento criaAgendamento() {
         Agendamento agenda = new Agendamento();
+        Funcionario fun = new Funcionario(); 
+        Servicos ser = new Servicos(); 
+        
         agenda.setIdAgendamento(Integer.parseInt(codigoAgendamento.getText().trim()));
-       
-        // agenda.setIdTipo(Integer.parseInt(codigoTipo.getText().trim()));
-        //agenda.setDataInicial(());
-        // agenda.setDataFinal(DataFinal);
-        if (!codigoAgendamento.getText().trim().isEmpty()) {
-            agenda.setIdAgendamento(Integer.parseInt(codigoAgendamento.getText().trim()));
-        }
+        fun.setIdFuncionario(Integer.parseInt(codigoFuncionario.getText().trim())); 
+        ser.setIdServico(Integer.parseInt(codigoServico.getText().trim()));
+        //agenda.setDataInicial((""));
+        //agenda.setDataFinal((""));
+        agenda.setStatus(jComboBoxStatus.getSelectedItem(). toString());
 
-        //     agenda.setNome(nomeText.getText().trim().toUpperCase());
-        //  agenda.setEndereco(logradouroText.getText().trim().toUpperCase());
-        //   agenda.setNumero(numeroText.getText().trim().toUpperCase());
-        // agenda.setCidade(cidade);
+        
         return agenda;
     }
 
@@ -410,12 +410,14 @@ public class CadastroAgendamento extends javax.swing.JFrame {
             Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Agendamento.class));
             if (retorno.isPresent()) {
                 Agendamento agenda = (Agendamento) retorno.get();
+                 Funcionario fun = (Funcionario) retorno.get(); 
+                 Servicos ser = (Servicos) retorno.get(); 
 
                 codigoAgendamento.setText(String.valueOf(agenda.getIdAgendamento()));
-
-                //       nomeText.setText(agenda.getDataFinal());
-                //      logradouroText.setText(agenda.getEndereco());
-                //      numeroText.setText(agenda.getNumero());
+                codigoFuncionario.setText(String.valueOf(fun.getIdFuncionario()));
+                codigoServico.setText(String.valueOf(ser.getIdServico()));
+                
+               
             }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
