@@ -6,6 +6,7 @@
 package br.com.l2g.views.cliente;
 
 import br.com.l2g.model.Cliente;
+import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Dimension;
@@ -41,8 +42,10 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
      */
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_CLIENTE = URL_BASE + "cliente";
+    private final Usuario usuarioTelaPrincipal;
 
-    public ListagemCliente() {
+    public ListagemCliente(Usuario usuarioTelaPrincipal) {
+        this.usuarioTelaPrincipal = usuarioTelaPrincipal;
         initComponents();
         CarregaTabela();
     }
@@ -68,6 +71,7 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Listagem de Clientes");
+        setVisible(Util.validaPermissaoAcesso(usuarioTelaPrincipal, "Cliente.class", jButton1, jButton2, jButton3));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
         jButton1.setText("Incluir");
