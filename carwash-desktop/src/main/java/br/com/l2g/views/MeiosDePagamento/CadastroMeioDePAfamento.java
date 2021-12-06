@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.l2g.MeiosDePagamento;
+package br.com.l2g.views.MeiosDePagamento;
 
 import br.com.l2g.model.FluxoDeCaixa;
 import br.com.l2g.util.Environment;
@@ -60,7 +60,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jComboxMeioDePagamento = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         codigoCaixaText.setEditable(false);
         codigoCaixaText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
@@ -152,6 +152,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSalvarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buttonSalvarFocusGained

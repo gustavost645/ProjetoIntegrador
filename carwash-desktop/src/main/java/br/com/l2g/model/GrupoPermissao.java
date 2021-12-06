@@ -5,23 +5,27 @@
  */
 package br.com.l2g.model;
 
+import java.io.Serializable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+
 @Setter
+@Getter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario{
+public class GrupoPermissao implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
 
-    private Integer idUsuario;
-    private String nome;
-    private String login;
-    private String senha;
-    private GrupoPermissao grupoPermissao;
+    private Integer codigoGrupoPermissao;
+    private String descricaoGrupoPermissao;
+    private List<Permissao> listaPermissao;
+    
     
 }

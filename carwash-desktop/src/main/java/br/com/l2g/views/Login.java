@@ -5,23 +5,14 @@
  */
 package br.com.l2g.views;
 
-import br.com.l2g.model.Cidade;
 import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.cidade.CadastroCidade;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
-import org.apache.http.HttpException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
@@ -265,10 +256,9 @@ public class Login extends javax.swing.JDialog {
             String jsonEnvio = Util.objectToJson(user);
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
-            System.out.println(jsonResposta);
             if (jsonResposta.trim().equalsIgnoreCase("\"success\"")) {
                 //instanciando a tela principal
-                Principal frame = new Principal();
+                Principal frame = new Principal(user);
                 //fechando - tela de login
                 this.dispose();
                 //chama tela principal do sistema
