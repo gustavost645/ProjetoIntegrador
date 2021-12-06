@@ -36,7 +36,7 @@ public class VeiculoController {
     public ResponseEntity<?> listarTodos() {
         try {
             List<Veiculo> lista = veiculoService.listarTudo();
-            log.info(lista.toString());
+            //log.info(lista.toString());
             return ResponseEntity.ok(lista);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());

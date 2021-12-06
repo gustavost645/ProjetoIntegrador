@@ -7,12 +7,14 @@ package br.com.l2g.entity;
 
 import br.com.l2g.audit.MarcaAudit;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,5 +41,5 @@ public class Marca implements Serializable {
     private Integer idMarca;
     
     @Column(name="mar_nome")
-    private String nomeMarca;
+    private String nomeMarca;    
 }
