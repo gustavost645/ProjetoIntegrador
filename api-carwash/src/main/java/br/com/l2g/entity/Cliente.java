@@ -53,9 +53,9 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "cli_cd_cidade", nullable = false)
     private Cidade cidade;
     
-    @JsonBackReference
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy="cliente")
-    private List<Veiculo> veiculo;
+    //@JsonBackReference
+    //@ManyToMany(fetch = FetchType.LAZY, mappedBy="cliente")
+    //private List<Veiculo> veiculo;
 
     @Column(name = "cli_endereco")
     private String endereco;

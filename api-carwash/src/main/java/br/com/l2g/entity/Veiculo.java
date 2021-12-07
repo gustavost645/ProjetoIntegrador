@@ -56,8 +56,8 @@ public class Veiculo implements Serializable {
     private String placa;
     
     
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "controle_veiculos", 
             joinColumns = {@JoinColumn(name = "con_cd_veiculo")},
             inverseJoinColumns = {@JoinColumn(name = "con_cd_cliente")})
