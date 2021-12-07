@@ -5,6 +5,7 @@
  */
 package br.com.l2g.model;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Veiculo {
     private Integer idVeiculo;
     private Marca marca;
     private String placa;
+    private List<Cliente> cliente;
 
 }

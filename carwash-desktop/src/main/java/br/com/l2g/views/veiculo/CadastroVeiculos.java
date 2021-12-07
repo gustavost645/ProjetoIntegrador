@@ -5,6 +5,7 @@
  */
 package br.com.l2g.views.veiculo;
 
+import br.com.l2g.model.Cliente;
 import br.com.l2g.model.Marca;
 import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
@@ -15,6 +16,8 @@ import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +39,8 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_VEICULO = URL_BASE + "veiculo";
     private static final String URL_MARCA = URL_BASE + "marca";
+    private static final String URL_CLIENTE = URL_BASE + "cliente";
+    private Cliente cliente;
 
     /**
      * Creates new form CadastroVeiculos
@@ -74,10 +79,12 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         nomeMarca = new javax.swing.JTextField();
         nomeMarcaVeiculo = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         codClienteVeiculo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         nomeClienteVeiculo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro De Veiculos");
@@ -138,6 +145,14 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/2943_16x16.png"))); // NOI18N
+        jButton2.setToolTipText("Pesquisar Cep");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,13 +160,18 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,9 +180,11 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -182,6 +204,14 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
         jLabel10.setText("Cliente:");
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/2943_16x16.png"))); // NOI18N
+        jButton1.setToolTipText("Pesquisar Cep");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,28 +219,34 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(buttonCancelar))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11)
-                                .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)
-                                .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(468, 468, 468)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(buttonCancelar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel11)
+                                        .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(468, 468, 468)))
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addComponent(codClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(codClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomeClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel12))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,15 +264,20 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                     .addComponent(jLabel10)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nomeClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonCancelar)
-                    .addComponent(buttonSalvar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(codClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomeClienteVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonCancelar)
+                            .addComponent(buttonSalvar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -269,8 +310,16 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     }//GEN-LAST:event_nomeMarcaVeiculoFocusLost
 
     private void codClienteVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codClienteVeiculoFocusLost
-        // TODO add your handling code here:
+        pesquisarClintePorId();
     }//GEN-LAST:event_codClienteVeiculoFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        listarCliente();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        listarMarca();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,6 +366,8 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private javax.swing.JButton buttonSalvar;
     private javax.swing.JTextField codClienteVeiculo;
     private javax.swing.JFormattedTextField codigoVeiculo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -368,6 +419,9 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         marca.setIdMarca(Integer.parseInt(nomeMarcaVeiculo.getText().trim()));
         marca.setNomeMarca(nomeMarca.getText());
         
+        ArrayList<Cliente> persons = new ArrayList<>();
+        persons.add(cliente);
+        veiculo.setCliente(persons);
         veiculo.setMarca(marca);
        
         veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
@@ -387,6 +441,8 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 nomeMarcaVeiculo.setText(String.valueOf(veiculo.getMarca().getIdMarca()));
                 nomeMarca.setText(veiculo.getMarca().getNomeMarca());
                 placaVeiculo.setText(veiculo.getPlaca());
+                codClienteVeiculo.setText(String.valueOf(veiculo.getCliente().get(0).getIdCliente()));
+                nomeClienteVeiculo.setText(veiculo.getCliente().get(0).getNome());
             }
         } catch (Exception ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -409,6 +465,35 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
                     nomeMarca.setText("");
                     nomeMarcaVeiculo.requestFocusInWindow();
+                }
+            }
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void listarCliente() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listarMarca() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void pesquisarClintePorId() {
+        try {
+            if (!codClienteVeiculo.getText().equals("")) {
+                String URL_PESQ = URL_CLIENTE + "/" + codClienteVeiculo.getText().trim();
+                HttpGet get = new HttpGet(URL_PESQ);
+                String resposta = Util.enviaRequest(get);
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cliente.class));                
+                if (retorno.isPresent()) {
+                    cliente = (Cliente) retorno.get();
+                    nomeClienteVeiculo.setText(cliente.getNome());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    codClienteVeiculo.requestFocusInWindow();
                 }
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
