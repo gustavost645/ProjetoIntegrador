@@ -23,6 +23,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 import org.apache.http.HttpException;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
@@ -34,6 +35,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_VEICULO = URL_BASE + "veiculo";
+    private static final String URL_MARCA = URL_BASE + "marca";
 
     /**
      * Creates new form CadastroVeiculos
@@ -135,6 +137,12 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         jLabel8.setText("Marca :");
 
         jLabel9.setText("*Modelo :");
+
+        marcaVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                marcaVeiculoFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -245,6 +253,10 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private void modeloVeiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_modeloVeiculoFocusGained
         modeloVeiculo.selectAll();
     }//GEN-LAST:event_modeloVeiculoFocusGained
+
+    private void marcaVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_marcaVeiculoFocusLost
+        pesquisarMarcaPorId();
+    }//GEN-LAST:event_marcaVeiculoFocusLost
 
     /**
      * @param args the command line arguments
@@ -364,6 +376,27 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 
         }
-
+    }
+    
+    private void pesquisarMarcaPorId() {
+        try {
+            if (!marcaVeiculo.getText().equals("")) {
+                String URL_PESQ = URL_MARCA + "/" + marcaVeiculo.getText().trim();
+                HttpGet get = new HttpGet(URL_PESQ);
+                String resposta = Util.enviaRequest(get);
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Marca.class));                
+                if (retorno.isPresent()) {
+                    Marca marca = (Marca) retorno.get();
+                    nomeMarca.setText(marca.getNomeMarca());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    nomeMarca.setText("");
+                    marcaVeiculo.requestFocusInWindow();
+                }
+            }
+        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+            Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

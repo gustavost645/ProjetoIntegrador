@@ -44,6 +44,7 @@ public class ListagemServico extends javax.swing.JInternalFrame {
 
     public ListagemServico() {
         initComponents();
+        CarregaTabela();
     }
 
     /**
@@ -98,6 +99,9 @@ public class ListagemServico extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
         jButton1.setText("Incluir");
@@ -179,8 +183,8 @@ public class ListagemServico extends javax.swing.JInternalFrame {
                     .addComponent(comboColunasBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -245,7 +249,7 @@ public class ListagemServico extends javax.swing.JInternalFrame {
             List<Servicos> servicolista = Arrays.asList(Util.jsonToObject(resposta, Servicos[].class));
             for (Servicos f : servicolista) {
                 objects[0] = f.getIdServico();
-                objects[1] = f.getNome();
+                objects[1] = f.getNomeServico();
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
