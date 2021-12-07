@@ -6,10 +6,10 @@
 package br.com.l2g.views.pagamento;
 
 import br.com.l2g.model.FluxoDeCaixa;
+import br.com.l2g.model.TipoPagamento;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.fluxodecaixa.CadastroCaixa;
-import br.com.l2g.views.fluxodecaixa.ListagemCaixa;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -41,12 +41,12 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
     /**
      * Creates new form NewJInternalFrame
      */
-    
-      private static final String URL_BASE = Environment.DEV.url();
-      private static final String URL_PAGAMENTO = URL_BASE + "pagamento";
-    
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_PAGAMENTO = URL_BASE + "tipoPagamento";
+
     public ListagemMeioDePagamento() {
         initComponents();
+        CarregaTabela();
     }
 
     /**
@@ -243,13 +243,10 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField localizarText;
     // End of variables declaration//GEN-END:variables
 
-
-    
-     public void setPosicao() {
+    public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
-       
 
     private void CarregaTabela() {
         try {
@@ -260,11 +257,10 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
             Object[] objects = new Object[col];
             HttpGet get = new HttpGet(URL_PAGAMENTO);
             String resposta = Util.enviaRequest(get);
-            List<FluxoDeCaixa> fluxodecaixa = Arrays.asList(Util.jsonToObject(resposta, FluxoDeCaixa[].class));
-            for (FluxoDeCaixa f : fluxodecaixa) {
-                objects[0] = f.getIdPagamento();
-                objects[1] = f.getTipo();
-              
+            List<TipoPagamento> fluxodecaixa = Arrays.asList(Util.jsonToObject(resposta, TipoPagamento[].class));
+            for (TipoPagamento f : fluxodecaixa) {
+                objects[0] = f.getIdTipoPagamento();
+                objects[1] = f.getNomeTipoPagamento();
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
@@ -277,13 +273,13 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
     }
 
     private void IncluirFLuxoDeCAixa() {
-        CadastroCaixa view = new CadastroCaixa(null, true, "incluir");
+        CadastroMeioDePAfamento view = new CadastroMeioDePAfamento(null, true, "incluir");
         view.setVisible(true);
         CarregaTabela();
     }
 
     private void AlterarPagamento() {
-        CadastroCaixa view = new CadastroCaixa(null, true, "editar");
+        CadastroMeioDePAfamento view = new CadastroMeioDePAfamento(null, true, "editar");
         view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
@@ -297,21 +293,13 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
                 String url_id = URL_PAGAMENTO + "/" + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = null;
-                try {
-                    resposta = Util.enviaRequest(delete);
-                } catch (IOException ex) {
-                    Logger.getLogger(ListagemCaixa.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (HttpException ex) {
-                    Logger.getLogger(ListagemCaixa.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchPaddingException ex) {
-                    Logger.getLogger(ListagemCaixa.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalBlockSizeException ex) {
-                    Logger.getLogger(ListagemCaixa.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                resposta = Util.enviaRequest(delete);
+
                 JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n" + resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
-        } catch (NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FluxoDeCaixa.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -340,6 +328,3 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
         }
     }
 }
-
-
-

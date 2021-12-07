@@ -64,7 +64,7 @@ public class CadastroCaixa extends javax.swing.JDialog {
         codigoCaixaText = new javax.swing.JFormattedTextField();
         ValorTX = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         buttonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/1479862814_Cancel.png"))); // NOI18N
         buttonCancelar.setText("Cancelar");

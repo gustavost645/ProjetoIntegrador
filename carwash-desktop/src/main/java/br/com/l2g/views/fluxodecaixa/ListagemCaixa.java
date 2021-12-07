@@ -11,7 +11,6 @@ import br.com.l2g.util.Util;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;

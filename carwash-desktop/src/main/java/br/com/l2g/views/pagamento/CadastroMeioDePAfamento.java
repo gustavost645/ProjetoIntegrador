@@ -5,7 +5,7 @@
  */
 package br.com.l2g.views.pagamento;
 
-import br.com.l2g.model.FluxoDeCaixa;
+import br.com.l2g.model.TipoPagamento;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.fluxodecaixa.CadastroCaixa;
@@ -29,16 +29,18 @@ import org.apache.http.entity.StringEntity;
  *
  * @author lucas
  */
-public class CadastroMeioDePAfamento extends javax.swing.JFrame {
+public class CadastroMeioDePAfamento  extends javax.swing.JDialog {
 
     /**
      * Creates new form CadastroMeioDePAfamento
      */
-      private static final String URL_BASE = Environment.DEV.url();
-     private static final String URL_PAGAMENTO = URL_BASE + "pagamento";
+    private static final String URL_BASE = Environment.DEV.url();
+    private static final String URL_PAGAMENTO = URL_BASE + "tipoPagamento";
+
     public CadastroMeioDePAfamento(Frame parent, boolean modal, String operacao) {
+        super(parent, modal);
         initComponents();
-        String viewTitulo = operacao.equals("incluir") ? "Cadastro de Cidades" : "Alterar Cidades";
+        String viewTitulo = operacao.equals("incluir") ? "Cadastro de Tipos de Pagamento" : "Alterar Tipo de Pagamento";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
         this.setTitle(viewTitulo);
         buttonSalvar.setText(botaoTitulo);
@@ -104,7 +106,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
 
         jLabel1.setText("*Toipo de Pagamento :");
 
-        jComboxMeioDePagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão Debito", "Cartão Credito", "Pix ", "Trasferencia Bancaria ", " " }));
+        jComboxMeioDePagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartao Debito", "Cartao Credito", "Pix ", "Trasferencia Bancaria", "Boleto", " " }));
         jComboxMeioDePagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboxMeioDePagamentoActionPerformed(evt);
@@ -120,16 +122,15 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonCancelar))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addGap(18, 18, 18)
-                            .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(codigoCaixaText, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboxMeioDePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -203,10 +204,7 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-            }
+        java.awt.EventQueue.invokeLater(() -> {
         });
     }
 
@@ -219,17 +217,17 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     // End of variables declaration//GEN-END:variables
 
-  private void salvarFluxo() {
+    private void salvarFluxo() {
         try {
             HttpPost post = new HttpPost(URL_PAGAMENTO);
-            FluxoDeCaixa fluxo = criaFluxo();
+            TipoPagamento fluxo = criaFluxo();
             String jsonEnvio = Util.objectToJson(fluxo);
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, FluxoDeCaixa.class));
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, TipoPagamento.class));
             if (!retorno.isPresent()) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Registro salvo com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
@@ -239,40 +237,37 @@ public class CadastroMeioDePAfamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private FluxoDeCaixa criaFluxo() {
-        FluxoDeCaixa fluxo = new FluxoDeCaixa();
+    
+    private TipoPagamento criaFluxo() {
+        TipoPagamento pag = new TipoPagamento();
         
-        if(!codigoCaixaText.getText().trim().isEmpty()){
-            fluxo.setIdPagamento(Integer.parseInt(codigoCaixaText.getText().trim()));
+        if (!codigoCaixaText.getText().trim().isEmpty()) {
+            pag.setIdTipoPagamento(Integer.parseInt(codigoCaixaText.getText().trim()));
         }
         
-        
-        fluxo.setValor(URL_BASE);
+        pag.setNomeTipoPagamento(jComboxMeioDePagamento.getSelectedItem().toString());
         //terminar 
-        return fluxo; 
+        return pag;        
     }
-
+    
     public void enviarCodigoSelecionado(String id) {
         try {
             String URL_PESQ = URL_PAGAMENTO + "/" + id;
             HttpGet get = new HttpGet(URL_PESQ);
             String resposta = Util.enviaRequest(get);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, FluxoDeCaixa.class));
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, TipoPagamento.class));
             if (retorno.isPresent()) {
-                FluxoDeCaixa fluxo = (FluxoDeCaixa) retorno.get();
+                TipoPagamento fluxo = (TipoPagamento) retorno.get();
                 
-                codigoCaixaText.setText(String.valueOf(fluxo.getIdPagamento()));
-               
-              
-            } 
-
+                codigoCaixaText.setText(String.valueOf(fluxo.getIdTipoPagamento()));
+                jComboxMeioDePagamento.setSelectedItem(fluxo.getNomeTipoPagamento());
+                
+            }            
+            
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
             Logger.getLogger(CadastroCaixa.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
 }
-
-

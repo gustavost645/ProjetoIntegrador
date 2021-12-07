@@ -5,7 +5,6 @@
  */
 package br.com.l2g.util;
 
-import br.com.l2g.model.Permissao;
 import br.com.l2g.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +24,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -42,7 +40,7 @@ import org.reflections.util.ClasspathHelper;
  */
 public class Util {
 
-    private static boolean permissao = false;
+    private static final boolean permissao = false;
 
     public static String objectToJson(Object objeto) throws JsonProcessingException {
         return new ObjectMapper().registerModule(new JavaTimeModule())

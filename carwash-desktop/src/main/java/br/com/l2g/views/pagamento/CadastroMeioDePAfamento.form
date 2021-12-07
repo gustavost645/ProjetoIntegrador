@@ -28,18 +28,17 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="buttonSalvar" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="codigoCaixaText" min="-2" pref="82" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="5" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="codigoCaixaText" min="-2" pref="82" max="-2" attributes="0"/>
                           <Component id="jComboxMeioDePagamento" min="-2" pref="174" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -126,13 +125,14 @@
     <Component class="javax.swing.JComboBox" name="jComboxMeioDePagamento">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="7">
             <StringItem index="0" value="Dinheiro"/>
-            <StringItem index="1" value="Cart&#xe3;o Debito"/>
-            <StringItem index="2" value="Cart&#xe3;o Credito"/>
+            <StringItem index="1" value="Cartao Debito"/>
+            <StringItem index="2" value="Cartao Credito"/>
             <StringItem index="3" value="Pix "/>
-            <StringItem index="4" value="Trasferencia Bancaria "/>
-            <StringItem index="5" value=" "/>
+            <StringItem index="4" value="Trasferencia Bancaria"/>
+            <StringItem index="5" value="Boleto"/>
+            <StringItem index="6" value=" "/>
           </StringArray>
         </Property>
       </Properties>

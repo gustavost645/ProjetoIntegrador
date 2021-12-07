@@ -6,7 +6,6 @@
 package br.com.l2g.views.cidade;
 
 import br.com.l2g.model.Cidade;
-import br.com.l2g.model.Cliente;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Frame;

@@ -278,7 +278,7 @@ public class Login extends javax.swing.JDialog {
     private Usuario informaUsuario() {
         Usuario user = new Usuario();
         user.setLogin(userText.getText().trim());
-        user.setSenha(Util.geraMD5(Arrays.toString(passwordText.getPassword())));
+        user.setSenha(Util.geraMD5(new String(passwordText.getPassword())));
 
         return user;
     }
