@@ -44,6 +44,7 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
 
     public ListagemVeiculos() {
         initComponents();
+        CarregaTabela();
     }
 
     /**
