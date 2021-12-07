@@ -46,6 +46,7 @@ public class TipoPagamentoController {
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody TipoPagamento tipoPagamento) {
         try {
+            log.info(tipoPagamento.toString());
             tipoPagamentoService.salvar(tipoPagamento);
             return ResponseEntity.ok(tipoPagamento);
         } catch (Exception ex) {
