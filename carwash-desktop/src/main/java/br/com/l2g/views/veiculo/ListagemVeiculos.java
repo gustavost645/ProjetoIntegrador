@@ -117,13 +117,16 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Cod", "Marca", "Placa"
+                "Código", "Marca", "Placa"
             }
         ));
         jTable1.setToolTipText("\n");
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
+        }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Marca", "Placa" }));
 
         jTextField1.setText("Pesquisar");
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {

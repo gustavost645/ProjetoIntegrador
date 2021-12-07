@@ -23,5 +23,5 @@ import lombok.ToString;
 public class Servicos {
 
     private Integer idServico;
-    private String nome;
+    private String nomeServico;
 }

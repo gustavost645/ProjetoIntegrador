@@ -144,10 +144,11 @@ public class CadastroServico extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonSalvar)))
+                    .addComponent(buttonSalvar))
+                .addGap(7, 7, 7))
         );
 
         pack();
@@ -232,7 +233,7 @@ public class CadastroServico extends javax.swing.JDialog {
             String jsonEnvio = Util.objectToJson(servico);
             post.setEntity(new StringEntity(jsonEnvio));
             String jsonResposta = Util.enviaRequest(post);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, CadastroServico.class));
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Servicos.class));
             if (!retorno.isPresent()) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar registro!", "ERRO", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -253,7 +254,7 @@ public class CadastroServico extends javax.swing.JDialog {
             servico.setIdServico(Integer.parseInt(codigoServicoText.getText().trim()));
         }
 
-        servico.setNome(nomeText.getText().trim().toUpperCase());
+        servico.setNomeServico(nomeText.getText().trim().toUpperCase());
 
         return servico;
     }
@@ -263,13 +264,11 @@ public class CadastroServico extends javax.swing.JDialog {
             String URL_PESQ = URL_SERVICO + "/" + id;
             HttpGet get = new HttpGet(URL_PESQ);
             String resposta = Util.enviaRequest(get);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, ListagemServico.class));
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Servicos.class));
             if (retorno.isPresent()) {
                 Servicos fluxo = (Servicos) retorno.get();
-
                 codigoServicoText.setText(String.valueOf(fluxo.getIdServico()));
-                nomeText.setText(fluxo.getNome());
-
+                nomeText.setText(fluxo.getNomeServico());
             }
 
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
