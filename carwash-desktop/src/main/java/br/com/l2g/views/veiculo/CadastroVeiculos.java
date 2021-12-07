@@ -66,8 +66,6 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         codigoVeiculo = new javax.swing.JFormattedTextField();
         buttonSalvar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        modeloVeiculo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         placaVeiculo = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -75,7 +73,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         nomeMarca = new javax.swing.JTextField();
-        marcaVeiculo = new javax.swing.JTextField();
+        nomeMarcaVeiculo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro De Veiculos");
@@ -110,17 +108,6 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("*Modelo Veiculo:");
-
-        modeloVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                modeloVeiculoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                modeloVeiculoFocusLost(evt);
-            }
-        });
-
         jLabel4.setText("*Placa Veiculo : ");
 
         placaVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -136,11 +123,14 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
         jLabel8.setText("Marca :");
 
-        jLabel9.setText("*Modelo :");
+        jLabel9.setText("Descrição:");
 
-        marcaVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+        nomeMarca.setEditable(false);
+        nomeMarca.setFocusable(false);
+
+        nomeMarcaVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                marcaVeiculoFocusLost(evt);
+                nomeMarcaVeiculoFocusLost(evt);
             }
         });
 
@@ -152,7 +142,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(marcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,7 +157,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(marcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomeMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
@@ -189,8 +179,6 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel11)
                         .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(modeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
                         .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -203,14 +191,10 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modeloVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(placaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,20 +228,9 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_placaVeiculoFocusLost
 
-    private void modeloVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_modeloVeiculoFocusLost
-        if (modeloVeiculo.getText().trim().length() > 60) {
-            JOptionPane.showMessageDialog(null, "Nome da empresa exedeu o limite de 60 caracteres\nFavor abreviar o nome!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            modeloVeiculo.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_modeloVeiculoFocusLost
-
-    private void modeloVeiculoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_modeloVeiculoFocusGained
-        modeloVeiculo.selectAll();
-    }//GEN-LAST:event_modeloVeiculoFocusGained
-
-    private void marcaVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_marcaVeiculoFocusLost
+    private void nomeMarcaVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeMarcaVeiculoFocusLost
         pesquisarMarcaPorId();
-    }//GEN-LAST:event_marcaVeiculoFocusLost
+    }//GEN-LAST:event_nomeMarcaVeiculoFocusLost
 
     /**
      * @param args the command line arguments
@@ -304,21 +277,18 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private javax.swing.JButton buttonSalvar;
     private javax.swing.JFormattedTextField codigoVeiculo;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField marcaVeiculo;
-    private javax.swing.JTextField modeloVeiculo;
     private javax.swing.JTextField nomeMarca;
+    private javax.swing.JTextField nomeMarcaVeiculo;
     private javax.swing.JTextField placaVeiculo;
     // End of variables declaration//GEN-END:variables
 
     private void limpaCamposveiculos() {
         codigoVeiculo.setText("");
-        modeloVeiculo.setText("");
         placaVeiculo.setText("");
     }
 
@@ -351,7 +321,9 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             veiculo.setIdVeiculo(Integer.parseInt(codigoVeiculo.getText().trim()));
         }
         Marca marca = new Marca();
-        marca.setIdMarca(Integer.parseInt(marcaVeiculo.getText().trim()));
+        marca.setIdMarca(Integer.parseInt(nomeMarcaVeiculo.getText().trim()));
+        marca.setNomeMarca(nomeMarca.getText());
+        
         veiculo.setMarca(marca);
        
         veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
@@ -360,19 +332,19 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
     public void enviarCodigoSelecionado(String id) throws IOException, HttpException, NoSuchPaddingException {
         try {
-            HttpPost post = new HttpPost(URL_VEICULO);
-            Veiculo v = criarVeiculo();
-            String jsonEnvio = Util.objectToJson(v);
-            post.setEntity(new StringEntity(jsonEnvio));
-            String jsonResposta = Util.enviaRequest(post);
-            Optional retorno = Optional.ofNullable(Util.jsonToObject(jsonResposta, Veiculo.class));
+           
+            String URL_PESQ = URL_VEICULO + "/" + id;
+            HttpGet get = new HttpGet(URL_PESQ);
+            String resposta = Util.enviaRequest(get);
+            Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Veiculo.class));
             if (retorno.isPresent()) {
                 Veiculo veiculo = (Veiculo) retorno.get();
                 codigoVeiculo.setText(String.valueOf(veiculo.getIdVeiculo()));
-                modeloVeiculo.setText(veiculo.getMarca().getIdMarca().toString());
+                nomeMarcaVeiculo.setText(String.valueOf(veiculo.getMarca().getIdMarca()));
+                nomeMarca.setText(veiculo.getMarca().getNomeMarca());
                 placaVeiculo.setText(veiculo.getPlaca());
             }
-        } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 
@@ -381,8 +353,8 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     
     private void pesquisarMarcaPorId() {
         try {
-            if (!marcaVeiculo.getText().equals("")) {
-                String URL_PESQ = URL_MARCA + "/" + marcaVeiculo.getText().trim();
+            if (!nomeMarcaVeiculo.getText().equals("")) {
+                String URL_PESQ = URL_MARCA + "/" + nomeMarcaVeiculo.getText().trim();
                 HttpGet get = new HttpGet(URL_PESQ);
                 String resposta = Util.enviaRequest(get);
                 Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Marca.class));                
@@ -392,7 +364,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 } else {
                     JOptionPane.showMessageDialog(null, "Registro nao encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
                     nomeMarca.setText("");
-                    marcaVeiculo.requestFocusInWindow();
+                    nomeMarcaVeiculo.requestFocusInWindow();
                 }
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
