@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.l2g.views.cliente;
+package br.com.l2g.views.usuario;
 
-import br.com.l2g.model.Cliente;
 import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
@@ -35,16 +34,16 @@ import org.apache.http.client.methods.HttpGet;
  *
  * @author Gustavo Steinhoefel
  */
-public class ListagemCliente extends javax.swing.JInternalFrame {
+public class ListagemUsuario extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ListagemCliente
+     * Creates new form ListagemUsuario
      */
     private static final String URL_BASE = Environment.DEV.url();
-    private static final String URL_CLIENTE = URL_BASE + "cliente";
+    private static final String URL_CLIENTE = URL_BASE + "usuario";
     private final Usuario usuarioTelaPrincipal;
 
-    public ListagemCliente(Usuario usuarioTelaPrincipal) {
+    public ListagemUsuario(Usuario usuarioTelaPrincipal) {
         this.usuarioTelaPrincipal = usuarioTelaPrincipal;
         initComponents();
         CarregaTabela();
@@ -70,7 +69,7 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
         localizarText = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Listagem de Clientes");
+        setTitle("Listagem de Usuários");
         setVisible(Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
@@ -122,11 +121,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "CPF/CNPJ", "Cidade"
+                "Código", "Nome", "Grupo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -139,11 +138,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(350);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
-        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "CPF/CNPJ", "Cidade" }));
+        comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", "Grupo" }));
 
         localizarText.setText("Pesquisar");
         localizarText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -220,7 +219,7 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        IncluirCliente();
+        IncluirUsuario();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -233,11 +232,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_localizarTextFocusGained
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DeletarCliente();
+        DeletarUsuario();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        AlterarCliente();
+        AlterarUsuario();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void localizarTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_localizarTextKeyPressed
@@ -273,49 +272,48 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             Object[] objects = new Object[col];
             HttpGet get = new HttpGet(URL_CLIENTE);
             String resposta = Util.enviaRequest(get);
-            List<Cliente> clienteList = Arrays.asList(Util.jsonToObject(resposta, Cliente[].class));
-            for (Cliente c : clienteList) {
-                objects[0] = c.getIdCliente();
+            List<Usuario> clienteList = Arrays.asList(Util.jsonToObject(resposta, Usuario[].class));
+            for (Usuario c : clienteList) {
+                objects[0] = c.getIdUsuario();
                 objects[1] = c.getNome();
-                objects[2] = c.getCpfCnpj();
-                objects[3] = c.getCidade().getNomeCidade();
+                objects[2] = ((c.getGrupoPermissao().getDescricaoGrupoPermissao() == null) ? "" : c.getGrupoPermissao().getDescricaoGrupoPermissao());
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
 
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemUsuario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void IncluirCliente() {
-        CadastroCliente view = new CadastroCliente(null, true, "incluir");
+    private void IncluirUsuario() {
+        CadastroUsuario view = new CadastroUsuario(null, true, "incluir");
         view.setVisible(true);
         CarregaTabela();
     }
 
-    private void AlterarCliente() {
-        CadastroCliente view = new CadastroCliente(null, true, "editar");
+    private void AlterarUsuario() {
+        CadastroUsuario view = new CadastroUsuario(null, true, "editar");
         view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
     }
 
-    private void DeletarCliente() {
+    private void DeletarUsuario() {
         try {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (opcao == 0 || opcao == -1) {
-                String url_id = URL_CLIENTE+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                String url_id = URL_CLIENTE + "/" + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = Util.enviaRequest(delete);
-                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n" + resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListagemUsuario.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -342,5 +340,5 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
 }

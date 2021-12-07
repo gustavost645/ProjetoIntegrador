@@ -7,7 +7,6 @@ package br.com.l2g.util;
 
 import br.com.l2g.model.Permissao;
 import br.com.l2g.model.Usuario;
-import br.com.l2g.views.funcionario.ListagemFuncionario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,11 +17,14 @@ import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,6 +32,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
 
 /**
  *
@@ -88,8 +93,8 @@ public class Util {
         return md5;
     }
 
-    public static boolean validaPermissaoAcesso(Usuario usuarioTelaPrincipal, String nomeClasse, JButton jButton1, JButton jButton2, JButton jButton3) {
-        permissao = false;
+    public static boolean validaPermissaoAcesso(Usuario usuarioTelaPrincipal, String nomeClasseOrigem, JButton jButton1, JButton jButton2, JButton jButton3) {
+        /*permissao = false;
         for (Permissao p : usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()) {
             if (p.getClasseNome().contains(nomeClasse) && p.getPermissaoListar()) {
                 jButton1.setEnabled(p.getPermissaoSalvar());
@@ -98,10 +103,30 @@ public class Util {
                 permissao = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                permissao = false;
             }
 
         }
-        return permissao;
+        return permissao;*/
+        return usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()
+                .stream()
+                .filter(c -> c.getClasseNome().equalsIgnoreCase(nomeClasseOrigem)).findAny().isPresent();
+    }
+
+    public static List listarProgramasSistema() {
+        Reflections r = new Reflections(
+                "br.com.l2g.views",
+                new SubTypesScanner(false),
+                ClasspathHelper.forClassLoader()
+        );
+        Set<Class<?>> classes = r.getSubTypesOf(Object.class);
+
+        List<String> list = new ArrayList<>();
+        for (Class<?> c : classes) {
+            list.add(c.getName().split("\\$")[0]);
+        }
+        list = list.stream().distinct().collect(Collectors.toList());
+        return list;
     }
 
 }
