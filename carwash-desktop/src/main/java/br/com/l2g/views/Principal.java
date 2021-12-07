@@ -8,7 +8,7 @@ package br.com.l2g.views;
 import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
-import br.com.l2g.views.MeiosDePagamento.ListagemMeioDePagamento;
+import br.com.l2g.views.pagamento.ListagemMeioDePagamento;
 import br.com.l2g.views.Movimento.ListageMovimento;
 import br.com.l2g.views.Sobre.Sobre;
 import br.com.l2g.views.agendamento.ListagemAgendamento;
@@ -17,6 +17,8 @@ import br.com.l2g.views.cliente.ListagemCliente;
 import br.com.l2g.views.veiculo.ListagemVeiculos;
 import br.com.l2g.views.funcionario.ListagemFuncionario;
 import br.com.l2g.views.servicos.ListagemServico;
+import br.com.l2g.views.permissao.ListagemPermissao;
+import br.com.l2g.views.usuario.ListagemUsuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.methods.HttpGet;
@@ -90,6 +92,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -293,6 +296,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem9);
 
+        jMenuItem7.setText("Permissões");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Relatórios");
@@ -423,8 +434,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCliente3ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
+        ListagemUsuario view = new ListagemUsuario(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setPosicao();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        ListagemPermissao view = new ListagemPermissao(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setPosicao();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -449,6 +468,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar.Separator jSeparator1;

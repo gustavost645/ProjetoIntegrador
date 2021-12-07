@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.l2g.views.MeiosDePagamento;
+package br.com.l2g.views.pagamento;
 
 import br.com.l2g.model.FluxoDeCaixa;
 import br.com.l2g.util.Environment;
