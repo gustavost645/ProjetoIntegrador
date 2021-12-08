@@ -97,16 +97,20 @@ public class Util {
     }
 
     public static boolean validaPermissaoAcesso(Usuario usuarioTelaPrincipal, String nomeClasseOrigem, JButton jButton1, JButton jButton2, JButton jButton3) {
-        Permissao p = usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()
-                .stream()
-                .filter(c -> c.getClasseNome().equalsIgnoreCase(nomeClasseOrigem)).findAny().get();
-        jButton1.setEnabled(p.getPermissaoSalvar());
-        jButton2.setEnabled(p.getPermissaoAlterar());
-        jButton3.setEnabled(p.getPermissaoExcluir());
-
-        return usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()
+        boolean status = usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()
                 .stream()
                 .filter(c -> c.getClasseNome().equalsIgnoreCase(nomeClasseOrigem)).findAny().isPresent();
+        if (status) {
+            Permissao p = usuarioTelaPrincipal.getGrupoPermissao().getListaPermissao()
+                    .stream()
+                    .filter(c -> c.getClasseNome().equalsIgnoreCase(nomeClasseOrigem)).findAny().get();
+            jButton1.setEnabled(p.getPermissaoSalvar());
+            jButton2.setEnabled(p.getPermissaoAlterar());
+            jButton3.setEnabled(p.getPermissaoExcluir());
+
+        }
+
+        return status;
 
     }
 

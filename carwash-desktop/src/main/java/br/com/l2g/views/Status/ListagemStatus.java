@@ -47,7 +47,7 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
         initComponents();
         if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
             JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
+            this.setVisible(false);
         }else{
             this.CarregaTabela();
         }

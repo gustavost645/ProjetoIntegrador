@@ -5,10 +5,12 @@
  */
 package br.com.l2g.views.servicos;
 
+import br.com.l2g.model.Funcionario;
 import br.com.l2g.model.Servicos;
 import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
+import br.com.l2g.views.agendamento.CadastroAgendamento;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -16,6 +18,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.PatternSyntaxException;
@@ -174,20 +177,18 @@ public class ListServico extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if (evt.getClickCount() == 1) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            /*if (frame instanceof CadastroVeiculos) {
-                CadastroVeiculos lv = (CadastroVeiculos) frame;
-
-                Marca marca = new Marca();
-                marca.setIdMarca(Integer.parseInt(model.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-                marca.setNomeMarca(model.getValueAt(jTable1.getSelectedRow(), 1).toString());
-
-                lv.setMarca(marca);
-
-                dispose();
-            }*/
-
+       try {
+            if (evt.getClickCount() == 2) {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                if (frame instanceof CadastroAgendamento) {
+                    CadastroAgendamento lv = (CadastroAgendamento) frame;
+                    String codigo = model.getValueAt(jTable1.getSelectedRow(), 0).toString();
+                    lv.setServico(buscarFuncPorId(codigo));
+                    dispose();
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ListServico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -275,6 +276,14 @@ public class ListServico extends javax.swing.JDialog {
                 System.out.print("Erro: " + pse);
             }
         }
+    }
+    
+    private Servicos buscarFuncPorId(String codigo) throws Exception {
+        String URL_PESQ = URL_servico + "/" + codigo;
+        HttpGet get = new HttpGet(URL_PESQ);
+        String resposta = Util.enviaRequest(get);
+        Optional<Servicos> retorno = Optional.ofNullable(Util.jsonToObject(resposta, Servicos.class));
+        return retorno.get();
     }
 
 }

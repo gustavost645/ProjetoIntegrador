@@ -5,7 +5,8 @@
  */
 package br.com.l2g.model;
 
-import javax.print.attribute.DateTimeSyntax;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,16 +22,22 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Agendamento {
 
-    private Integer idAgendamento;
-    private String nome;
-    private String placa;
-    private String tipo;
-    private DateTimeSyntax dataInicial;
-    private DateTimeSyntax dataFinal;
-    private String status;
+    private Integer idAgenda;
 
-    // private String nomeCidade;
+    private Funcionario funcionario;
+    
+    private Servicos tipoServico;
+    
+    private Setor setorTrabalho;
+    
+    private Veiculo veiculoCliente;
+
+    private Status statusAgenda;
+    
+    private String dataInicial;
+
+    private String dataFinal;
+    
 }

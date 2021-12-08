@@ -42,6 +42,7 @@ public class ListageMovimento extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListageMovimento
+     * @param usuarioTelaPrincipal
      */
     public ListageMovimento(Usuario usuarioTelaPrincipal) {
         initComponents();

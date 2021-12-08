@@ -559,7 +559,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
 
         movimento.setIdMovimento(Integer.parseInt(codigoCMovimentoText.getText().trim()));
 
-        agenda.setIdAgendamento(Integer.parseInt(codigoAgendaTex.getText().trim()));
+        //agenda.setIdAgendamento(Integer.parseInt(codigoAgendaTex.getText().trim()));
 
         movimento.setPlaca(PlacaVeiculo.getText().trim());
         movimento.setNomeCliente(NomeCliente.getText().trim());
@@ -586,7 +586,7 @@ public class CadastroMovimento extends javax.swing.JFrame {
                 FluxoDeCaixa flux = (FluxoDeCaixa) retorno.get();
 
                 codigoCMovimentoText.setText(String.valueOf(movimento.getIdMovimento()));
-                codigoAgendaTex.setText(String.valueOf(agenda.getIdAgendamento()));
+                //codigoAgendaTex.setText(String.valueOf(agenda.getIdAgendamento()));
                 PlacaVeiculo.setText(movimento.getPlaca());
                 NomeCliente.setText(movimento.getNomeCliente());
                 CodigoDoPagamento.setText(String.valueOf(flux.getIdPagamento()));

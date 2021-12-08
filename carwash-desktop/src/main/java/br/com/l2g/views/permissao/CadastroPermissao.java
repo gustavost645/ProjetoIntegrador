@@ -331,7 +331,10 @@ public class CadastroPermissao extends javax.swing.JDialog {
         List<Permissao> listaPermissao = new ArrayList();
         for (int i = 0; i < jTable1.getModel().getRowCount(); i++) {
             Permissao per = new Permissao();
-            per.setCodigoPermissao(Integer.parseInt(jTable1.getModel().getValueAt(i, 0).toString()));
+            
+            if (!jTable1.getModel().getValueAt(i, 0).toString().trim().isEmpty()) {
+               per.setCodigoPermissao(Integer.parseInt(jTable1.getModel().getValueAt(i, 0).toString()));
+            }
             per.setClasseNome(jTable1.getModel().getValueAt(i, 1).toString());
             per.setPermissaoListar((Boolean) jTable1.getModel().getValueAt(i, 2));
             per.setPermissaoSalvar((Boolean) jTable1.getModel().getValueAt(i, 3));

@@ -41,7 +41,7 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
      * Creates new form NewJInternalFrame
      */
     private static final String URL_BASE = Environment.DEV.url();
-    private static final String URL_AGENDAMENTO = URL_BASE + "agendamento";
+    private static final String URL_AGENDAMENTO = URL_BASE + "agenda";
 
     public ListagemAgendamento(Usuario usuarioTelaPrincipal) {
         initComponents();
@@ -122,11 +122,11 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Placa", "Tipo", "Data, Hora Inicial ", "Data, Hora Final", "Status"
+                "Código", "Nome", "Placa", "Serviço", "Setor", "Data, Hora Inicial ", "Data, Hora Final", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true, true, true
+                false, false, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -134,6 +134,16 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(7).setPreferredWidth(80);
+        }
 
         localizarText.setText("Pesquisar");
         localizarText.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -156,7 +166,7 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1159, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,12 +190,12 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboColunasBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(localizarText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -255,14 +265,16 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
             HttpGet get = new HttpGet(URL_AGENDAMENTO);
             String resposta = Util.enviaRequest(get);
             List<Agendamento> agendamentoList = Arrays.asList(Util.jsonToObject(resposta, Agendamento[].class));
+            System.out.println(agendamentoList.toString());
             for (Agendamento a : agendamentoList) {
-                objects[0] = a.getIdAgendamento();
-                objects[1] = a.getNome();
-                objects[2] = a.getPlaca();
-                objects[3] = a.getTipo();
-                objects[4] = a.getDataFinal();
-                objects[5] = a.getDataFinal();
-                objects[6] = a.getStatus(); 
+                objects[0] = a.getIdAgenda();
+                objects[1] = a.getVeiculoCliente().getCliente().get(0).getNome();
+                objects[2] = a.getVeiculoCliente().getPlaca();
+                objects[3] = a.getTipoServico().getNomeServico();
+                objects[4] = a.getSetorTrabalho().getNomeSetor();
+                objects[5] = a.getDataInicial();
+                objects[6] = a.getDataFinal();
+                objects[7] = a.getStatusAgenda().getNomeStatus(); 
 
                 Tmodel.addRow(objects);
                 jTable1.setModel(Tmodel);
