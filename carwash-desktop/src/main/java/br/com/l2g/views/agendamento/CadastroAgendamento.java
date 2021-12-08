@@ -45,6 +45,7 @@ public class CadastroAgendamento extends javax.swing.JDialog {
     private Funcionario funcionario;
     private Servicos servico;
     private Status status;
+    private Setor setor;
 
     /**
      * Creates new form NewJFrame
@@ -441,8 +442,8 @@ public class CadastroAgendamento extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        /*ListSetor tl = new ListSetor(null, true, this);
-        tl.setVisible(true);*/
+        ListSetor tl = new ListSetor(null, true, this);
+        tl.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -611,6 +612,12 @@ public class CadastroAgendamento extends javax.swing.JDialog {
         this.status = status;
         codigoStatusText.setText(status.getIdStatus().toString());
         nomeStatusText.setText(status.getNomeStatus());
+    }
+
+    public void setSetor(Setor buscarSetor) {
+        this.setor = buscarSetor;
+        jTextField4.setText(setor.getIdSetor().toString());
+        jTextField5.setText(setor.getNomeSetor());        
     }
 
 }
