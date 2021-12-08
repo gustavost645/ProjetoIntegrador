@@ -16,10 +16,6 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-/**
- *
- * @author lucas
- */
 public class Status {
 
     private Integer idStatus;

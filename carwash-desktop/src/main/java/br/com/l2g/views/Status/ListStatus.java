@@ -5,11 +5,11 @@
  */
 package br.com.l2g.views.Status;
 
+import br.com.l2g.model.Cidade;
 import br.com.l2g.model.Status;
-import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
-import java.awt.Dimension;
+import br.com.l2g.views.cliente.CadastroCliente;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -22,6 +22,7 @@ import java.util.regex.PatternSyntaxException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -35,22 +36,20 @@ import org.apache.http.client.methods.HttpGet;
  *
  * @author lucas
  */
-public class ListagemStatus extends javax.swing.JInternalFrame {
+public class ListStatus extends javax.swing.JDialog {
 
     /**
      * Creates new form ListagemServico
      */
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_STATUS = URL_BASE + "status";
+     private final JDialog frame;
 
-    public ListagemStatus(Usuario usuarioTelaPrincipal) {
+    public ListStatus(java.awt.Frame parent, boolean modal,javax.swing.JDialog aThis) {
+        super(parent, modal);
         initComponents();
-        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
-            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }else{
-            this.CarregaTabela();
-        }
+        frame = aThis;
+        CarregaTabela();
     }
 
     /**
@@ -71,6 +70,7 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de Status");
         setPreferredSize(new java.awt.Dimension(712, 488));
 
@@ -102,6 +102,11 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -202,6 +207,7 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void localizarTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_localizarTextFocusGained
@@ -230,6 +236,25 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+       if (evt.getClickCount() == 2) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            if (frame instanceof CadastroCliente) {
+                /*CadastroCliente lv = (CadastroCliente) frame;
+
+                Cidade cidade = new Cidade();
+                cidade.setIdCidade(Integer.parseInt(model.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+                cidade.setNomeCidade(model.getValueAt(jTable1.getSelectedRow(), 1).toString());
+                cidade.setUfEstado(model.getValueAt(jTable1.getSelectedRow(), 2).toString());
+
+                lv.setCidade(cidade);*/
+
+                dispose();
+            }
+
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -262,7 +287,7 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
 
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemStatus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListStatus.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -292,7 +317,7 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
-            Logger.getLogger(ListagemStatus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListStatus.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -318,11 +343,6 @@ public class ListagemStatus extends javax.swing.JInternalFrame {
                 System.out.print("Erro: " + pse);
             }
         }
-    }
-
-    public void setPosicao() {
-        Dimension d = this.getDesktopPane().getSize();
-        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
 
 }

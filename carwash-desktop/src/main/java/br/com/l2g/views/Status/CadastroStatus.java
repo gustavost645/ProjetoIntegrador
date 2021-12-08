@@ -41,7 +41,7 @@ public class CadastroStatus extends javax.swing.JDialog {
     public CadastroStatus(Frame parent, boolean modal, String operacao) {
         super(parent, modal);
         initComponents();
-        String viewTitulo = operacao.equals("incluir") ? "Cadastro de Funcionario" : "Alterar Funcionario";
+        String viewTitulo = operacao.equals("incluir") ? "Cadastro Status" : "Alterar Status";
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
         this.setTitle(viewTitulo);
         buttonSalvar.setText(botaoTitulo);
@@ -212,10 +212,8 @@ public class CadastroStatus extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //  new CadastroServico().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            //  new CadastroServico().setVisible(true);
         });
     }
 
