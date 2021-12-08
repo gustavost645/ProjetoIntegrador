@@ -25,6 +25,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Setter
 @Getter
@@ -43,36 +45,35 @@ public class Agenda implements Serializable {
     @GeneratedValue(generator = "AgendaSeq", strategy = GenerationType.SEQUENCE)
     @Column(name = "age_codigo")
     private Integer idAgenda;
-    
+
     @OneToOne
     @JoinColumn(name = "age_cd_funcionario", referencedColumnName = "fun_codigo")
     private Funcionario funcionario;
-    
+
     @OneToOne
-    @JoinColumn(name = "age_cd_tipo",referencedColumnName = "tip_codigo")
+    @JoinColumn(name = "age_cd_tipo", referencedColumnName = "tip_codigo")
     private Servico tipoServico;
-    
+
     @OneToOne
     @JoinColumn(name = "age_cd_setor", referencedColumnName = "set_codigo")
     private Setor setorTrabalho;
-    
+
     @OneToOne
     @JoinColumn(name = "age_cd_veiculo", referencedColumnName = "vei_codigo")
     private Veiculo veiculoCliente;
-    
+
     @OneToOne
     @JoinColumn(name = "age_status", referencedColumnName = "sta_codigo")
     private Status statusAgenda;
-       
+
     @Column(name = "age_inicial")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataInicial;
-    
+
     @Column(name = "age_final")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataFinal;
-
-    
-
 
 }
