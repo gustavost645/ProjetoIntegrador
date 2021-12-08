@@ -6,7 +6,6 @@
 package br.com.l2g.entity;
 
 import br.com.l2g.audit.VeiculoAudit;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -57,7 +56,7 @@ public class Veiculo implements Serializable {
     
     
     //@JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "controle_veiculos", 
             joinColumns = {@JoinColumn(name = "con_cd_veiculo")},
             inverseJoinColumns = {@JoinColumn(name = "con_cd_cliente")})
