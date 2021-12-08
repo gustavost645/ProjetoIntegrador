@@ -16,6 +16,7 @@ import br.com.l2g.util.Util;
 import br.com.l2g.views.Status.ListStatus;
 import br.com.l2g.views.funcionario.ListFuncionario;
 import br.com.l2g.views.servicos.ListServico;
+import br.com.l2g.views.setor.ListSetor;
 import br.com.l2g.views.veiculo.ListVeiculos;
 import java.awt.Frame;
 import java.io.IOException;
