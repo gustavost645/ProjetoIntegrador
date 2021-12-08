@@ -12,8 +12,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.IOException;
+import com.github.underscore.lodash.U;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigInteger;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +28,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -121,6 +124,11 @@ public class Util {
         }
         list = list.stream().distinct().collect(Collectors.toList());
         return list;
+    }
+
+    public static void JsonToXmlFile(String caminhoArq, String jsonEnvio) throws IOException {
+        //ex: Util.JsonToXmlFile("c:\\temp\\teste.xml", jsonEnvio);
+        FileUtils.writeStringToFile(new File(caminhoArq), U.jsonToXml(jsonEnvio), "UTF-8");
     }
 
 }

@@ -9,7 +9,6 @@ import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.cidade.CadastroCidade;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -267,7 +266,7 @@ public class Login extends javax.swing.JDialog {
 
                 JOptionPane.showMessageDialog(null, "Falha no login", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
-
+            
         } catch (Exception ex) {
             Logger.getLogger(CadastroCidade.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
