@@ -11,6 +11,7 @@ import br.com.l2g.util.Util;
 import br.com.l2g.views.pagamento.ListagemMeioDePagamento;
 import br.com.l2g.views.Movimento.ListageMovimento;
 import br.com.l2g.views.Sobre.Sobre;
+import br.com.l2g.views.Status.ListagemStatus;
 import br.com.l2g.views.agendamento.ListagemAgendamento;
 import br.com.l2g.views.cidade.ListagemCidade;
 import br.com.l2g.views.cliente.ListagemCliente;
@@ -83,6 +84,7 @@ public class Principal extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -252,6 +254,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem8.setText("Status");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem8);
         jMenu1.add(jSeparator3);
 
         jMenuItem5.setText("Meios de Pagamento");
@@ -405,6 +415,10 @@ public class Principal extends javax.swing.JFrame {
         listarPermissao();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        listarStatus();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCliente;
@@ -429,6 +443,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar.Separator jSeparator1;
@@ -467,6 +482,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void listarCidade() {
         ListagemCidade view = new ListagemCidade(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarStatus() {
+        ListagemStatus view = new ListagemStatus(usuarioTelaPrincipal);
         jDesktopPane1.add(view);
         view.setVisible(true);
         view.setPosicao();
