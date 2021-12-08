@@ -60,9 +60,10 @@ public class Agenda implements Serializable {
     @JoinColumn(name = "age_cd_veiculo", referencedColumnName = "vei_codigo")
     private Veiculo veiculoCliente;
     
-    @Column(name = "age_status")
-    private Integer statusAgenda;
-    
+    @OneToOne
+    @JoinColumn(name = "age_status", referencedColumnName = "sta_codigo")
+    private Status statusAgenda;
+       
     @Column(name = "age_inicial")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataInicial;

@@ -5,11 +5,9 @@
  */
 package br.com.l2g.entity;
 
-import br.com.l2g.audit.SetorAudit;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,17 +25,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EntityListeners(SetorAudit.class)
-@SequenceGenerator(name = "SetorSeq", sequenceName = "setor_set_codigo_seq", allocationSize = 1)
-@Table(name = "setor")
-public class Setor implements Serializable {
+@SequenceGenerator(name = "StatusSeq", sequenceName = "status_sta_codigo_seq", allocationSize = 1)
+@Table(name = "status")
+public class Status implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "SetorSeq", strategy = GenerationType.SEQUENCE)
-    @Column(name="set_codigo")
-    private Integer idSetor;
+    @GeneratedValue(generator = "StatusSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name="sta_codigo")
+    private Integer idStatus;
     
-    @Column(name="set_nome")
-    private String nomeSetor;
+    @Column(name="sta_nome")
+    private String nomeStatus;
 }
