@@ -7,17 +7,17 @@ package br.com.l2g.views.veiculo;
 
 import br.com.l2g.model.Cliente;
 import br.com.l2g.model.Marca;
+import br.com.l2g.model.Usuario;
 import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.cliente.CadastroCliente;
-import java.awt.Cursor;
+import br.com.l2g.views.cliente.ListagemCliente;
 import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +41,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     private static final String URL_MARCA = URL_BASE + "marca";
     private static final String URL_CLIENTE = URL_BASE + "cliente";
     private Cliente cliente;
+    private Usuario usuarioTelaPrincipal;
 
     /**
      * Creates new form CadastroVeiculos
@@ -56,6 +57,16 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
         this.setTitle(viewTitulo);
         buttonSalvar.setText(botaoTitulo);
+    }
+
+    CadastroVeiculos(Frame parent, boolean modal, String operacao, Usuario usuarioTelaPrincipal) {
+        super(parent, modal);
+        initComponents();
+        String viewTitulo = operacao.equals("incluir") ? "Cadastro de Veiculo" : "Alterar Veiculo";
+        String botaoTitulo = operacao.equals("incluir") ? "Salvar" : "Alterar";
+        this.setTitle(viewTitulo);
+        buttonSalvar.setText(botaoTitulo);
+        this.usuarioTelaPrincipal = usuarioTelaPrincipal;
     }
 
     /**
@@ -418,19 +429,19 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         Marca marca = new Marca();
         marca.setIdMarca(Integer.parseInt(nomeMarcaVeiculo.getText().trim()));
         marca.setNomeMarca(nomeMarca.getText());
-        
+
         ArrayList<Cliente> persons = new ArrayList<>();
         persons.add(cliente);
         veiculo.setCliente(persons);
         veiculo.setMarca(marca);
-       
+
         veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
         return veiculo;
     }
 
     public void enviarCodigoSelecionado(String id) throws IOException, HttpException, NoSuchPaddingException {
         try {
-           
+
             String URL_PESQ = URL_VEICULO + "/" + id;
             HttpGet get = new HttpGet(URL_PESQ);
             String resposta = Util.enviaRequest(get);
@@ -450,14 +461,14 @@ public class CadastroVeiculos extends javax.swing.JDialog {
 
         }
     }
-    
+
     private void pesquisarMarcaPorId() {
         try {
             if (!nomeMarcaVeiculo.getText().equals("")) {
                 String URL_PESQ = URL_MARCA + "/" + nomeMarcaVeiculo.getText().trim();
                 HttpGet get = new HttpGet(URL_PESQ);
                 String resposta = Util.enviaRequest(get);
-                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Marca.class));                
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Marca.class));
                 if (retorno.isPresent()) {
                     Marca marca = (Marca) retorno.get();
                     nomeMarca.setText(marca.getNomeMarca());
@@ -474,11 +485,11 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     }
 
     private void listarCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //
     }
 
     private void listarMarca() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //
     }
 
     private void pesquisarClintePorId() {
@@ -487,7 +498,7 @@ public class CadastroVeiculos extends javax.swing.JDialog {
                 String URL_PESQ = URL_CLIENTE + "/" + codClienteVeiculo.getText().trim();
                 HttpGet get = new HttpGet(URL_PESQ);
                 String resposta = Util.enviaRequest(get);
-                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cliente.class));                
+                Optional retorno = Optional.ofNullable(Util.jsonToObject(resposta, Cliente.class));
                 if (retorno.isPresent()) {
                     cliente = (Cliente) retorno.get();
                     nomeClienteVeiculo.setText(cliente.getNome());
@@ -500,5 +511,10 @@ public class CadastroVeiculos extends javax.swing.JDialog {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void setCliente(Cliente cliente) {
+        codClienteVeiculo.setText(String.valueOf(cliente.getIdCliente()));
+        nomeClienteVeiculo.setText(cliente.getNome());
     }
 }

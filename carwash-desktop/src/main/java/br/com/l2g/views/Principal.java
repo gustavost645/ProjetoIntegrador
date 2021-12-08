@@ -19,8 +19,15 @@ import br.com.l2g.views.funcionario.ListagemFuncionario;
 import br.com.l2g.views.servicos.ListagemServico;
 import br.com.l2g.views.permissao.ListagemPermissao;
 import br.com.l2g.views.usuario.ListagemUsuario;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import org.apache.http.HttpException;
 import org.apache.http.client.methods.HttpGet;
 
 /**
@@ -28,28 +35,21 @@ import org.apache.http.client.methods.HttpGet;
  * @author Gustavo Steinhoefel
  */
 public class Principal extends javax.swing.JFrame {
-    
+
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_USUARIO = URL_BASE + "usuario/login/";
     private Usuario usuarioTelaPrincipal;
 
     /**
      * Creates new form Principal
+     *
      * @param user
      */
-
     public Principal(Usuario user) {
-        try {
-            initComponents();
-            HttpGet get = new HttpGet(URL_USUARIO+user.getLogin());
-            String resposta = Util.enviaRequest(get);
-            usuarioTelaPrincipal = Util.jsonToObject(resposta, Usuario.class);
-            
-            System.out.println(usuarioTelaPrincipal.toString());
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        initComponents();
+        listarPermissaoUsuario(user);
+
     }
 
     /**
@@ -346,103 +346,63 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        ListagemCliente view = new ListagemCliente(usuarioTelaPrincipal);
-        jDesktopPane1.add(view);
-        view.setPosicao();
+        listarCliente();
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        ListagemCidade view = new ListagemCidade();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarCidade();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ListagemCliente view = new ListagemCliente(usuarioTelaPrincipal);
-        jDesktopPane1.add(view);
-        view.setPosicao();
+        listarCliente();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ListagemVeiculos view = new ListagemVeiculos();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarVeiculos();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        ListagemFuncionario view = new ListagemFuncionario(usuarioTelaPrincipal);
-        jDesktopPane1.add(view);
-        view.setPosicao();
+        listarFuncionario();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        ListagemServico view = new ListagemServico();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarServico();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        Sobre view = new Sobre();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarSobre();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        ListagemMeioDePagamento view = new ListagemMeioDePagamento();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarMeioPagamento();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        ListagemAgendamento view = new ListagemAgendamento();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarAgendamento();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        ListageMovimento view = new ListageMovimento();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarMovimento();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void btnCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente1ActionPerformed
-        ListagemVeiculos view = new ListagemVeiculos();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao(); 
+        listarVeiculos();
     }//GEN-LAST:event_btnCliente1ActionPerformed
 
     private void btnCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente2ActionPerformed
-        ListagemAgendamento view = new ListagemAgendamento();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarAgendamento();
     }//GEN-LAST:event_btnCliente2ActionPerformed
 
     private void btnCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCliente3ActionPerformed
-        ListageMovimento view = new ListageMovimento();
-        jDesktopPane1.add(view);
-        view.setVisible(true);
-        view.setPosicao();
+        listarMovimento();
     }//GEN-LAST:event_btnCliente3ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        ListagemUsuario view = new ListagemUsuario(usuarioTelaPrincipal);
-        jDesktopPane1.add(view);
-        view.setPosicao();
+        listarUsuario();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        ListagemPermissao view = new ListagemPermissao(usuarioTelaPrincipal);
-        jDesktopPane1.add(view);
-        view.setPosicao();
+        listarPermissao();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
 
@@ -483,4 +443,94 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    private void listarPermissaoUsuario(Usuario user) {
+        try {
+
+            HttpGet get = new HttpGet(URL_USUARIO + user.getLogin());
+            String resposta = Util.enviaRequest(get);
+            usuarioTelaPrincipal = Util.jsonToObject(resposta, Usuario.class);
+
+            System.out.println(usuarioTelaPrincipal.toString());
+
+        } catch (IOException | InvalidKeyException | NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException | HttpException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void listarCliente() {
+        ListagemCliente view = new ListagemCliente(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarCidade() {
+        ListagemCidade view = new ListagemCidade(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarVeiculos() {
+        ListagemVeiculos view = new ListagemVeiculos(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarFuncionario() {
+        ListagemFuncionario view = new ListagemFuncionario(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarServico() {
+        ListagemServico view = new ListagemServico(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarSobre() {
+        Sobre view = new Sobre();
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarMeioPagamento() {
+        ListagemMeioDePagamento view = new ListagemMeioDePagamento(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarAgendamento() {
+        ListagemAgendamento view = new ListagemAgendamento(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarMovimento() {
+        ListageMovimento view = new ListageMovimento(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
+
+    private void listarUsuario() {
+        ListagemUsuario view = new ListagemUsuario(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setPosicao();
+    }
+
+    private void listarPermissao() {
+        ListagemPermissao view = new ListagemPermissao(usuarioTelaPrincipal);
+        jDesktopPane1.add(view);
+        view.setVisible(true);
+        view.setPosicao();
+    }
 }

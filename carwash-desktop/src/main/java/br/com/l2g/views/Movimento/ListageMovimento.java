@@ -6,6 +6,7 @@
 package br.com.l2g.views.Movimento;
 
 import br.com.l2g.model.Movimento;
+import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Dimension;
@@ -42,9 +43,14 @@ public class ListageMovimento extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListageMovimento
      */
-    public ListageMovimento() {
+    public ListageMovimento(Usuario usuarioTelaPrincipal) {
         initComponents();
-        CarregaTabela();
+        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
+            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }else{
+            this.CarregaTabela();
+        }
     }
 
     /**

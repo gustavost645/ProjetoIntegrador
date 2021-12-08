@@ -42,12 +42,15 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
      */
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_FUNCIONARIO = URL_BASE + "funcionario";
-    private final Usuario usuarioTelaPrincipal;
 
     public ListagemFuncionario(Usuario usuarioTelaPrincipal) {
-        this.usuarioTelaPrincipal = usuarioTelaPrincipal;
         initComponents();
-        CarregaTabela();
+        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
+            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }else{
+            this.CarregaTabela();
+        }
     }
 
     /**
@@ -70,7 +73,6 @@ public class ListagemFuncionario extends javax.swing.JInternalFrame {
 
         setTitle("Listagem de Funcionarios");
         setPreferredSize(new java.awt.Dimension(712, 520));
-        setVisible(Util.validaPermissaoAcesso(usuarioTelaPrincipal, "Funcionario.class", jButton1, jButton2, jButton3));
 
         comboColunasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código", "Nome", " " }));
 

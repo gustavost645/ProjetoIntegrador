@@ -7,9 +7,9 @@ package br.com.l2g.views.pagamento;
 
 import br.com.l2g.model.FluxoDeCaixa;
 import br.com.l2g.model.TipoPagamento;
+import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
-import br.com.l2g.views.fluxodecaixa.CadastroCaixa;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -44,9 +44,14 @@ public class ListagemMeioDePagamento extends javax.swing.JInternalFrame {
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_PAGAMENTO = URL_BASE + "tipoPagamento";
 
-    public ListagemMeioDePagamento() {
+    public ListagemMeioDePagamento(Usuario usuarioTelaPrincipal) {
         initComponents();
-        CarregaTabela();
+        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
+            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }else{
+            this.CarregaTabela();
+        }
     }
 
     /**

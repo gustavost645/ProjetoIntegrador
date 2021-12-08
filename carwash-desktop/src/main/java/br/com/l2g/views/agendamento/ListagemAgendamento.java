@@ -6,6 +6,7 @@
 package br.com.l2g.views.agendamento;
 
 import br.com.l2g.model.Agendamento;
+import br.com.l2g.model.Usuario;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import java.awt.Dimension;
@@ -42,9 +43,14 @@ public class ListagemAgendamento extends javax.swing.JInternalFrame {
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_AGENDAMENTO = URL_BASE + "agendamento";
 
-    public ListagemAgendamento() {
+    public ListagemAgendamento(Usuario usuarioTelaPrincipal) {
         initComponents();
-        CarregaTabela();
+        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
+            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }else{
+            this.CarregaTabela();
+        }
     }
 
     /**

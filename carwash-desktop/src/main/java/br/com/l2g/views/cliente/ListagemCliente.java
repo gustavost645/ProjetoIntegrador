@@ -42,12 +42,16 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
      */
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_CLIENTE = URL_BASE + "cliente";
-    private final Usuario usuarioTelaPrincipal;
 
     public ListagemCliente(Usuario usuarioTelaPrincipal) {
-        this.usuarioTelaPrincipal = usuarioTelaPrincipal;
         initComponents();
-        CarregaTabela();
+        if(!Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3)){
+            JOptionPane.showMessageDialog(null, "Usuario sem acesso a esta tela!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }else{
+            this.CarregaTabela();
+        }
+        
     }
 
     /**
@@ -71,7 +75,6 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Listagem de Clientes");
-        setVisible(Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
         jButton1.setText("Incluir");
@@ -131,6 +134,11 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -246,6 +254,24 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_localizarTextKeyPressed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (evt.getClickCount() == 1) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            /*if (frame instanceof CadastroVeiculos) {
+                CadastroVeiculos lv = (CadastroVeiculos) frame;
+
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(Integer.parseInt(model.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+                cliente.setIdCliente(Integer.parseInt(model.getValueAt(jTable1.getSelectedRow(), 1).toString()));
+
+                lv.setCliente(cliente);
+
+                dispose();
+            }*/
+
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
@@ -308,10 +334,10 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             Object[] options = {"Sim", "Não"};
             int opcao = JOptionPane.showOptionDialog(null, "Deseja excluir este registro?", "Excluir", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (opcao == 0 || opcao == -1) {
-                String url_id = URL_CLIENTE+"/"+jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+                String url_id = URL_CLIENTE + "/" + jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
                 HttpDelete delete = new HttpDelete(url_id);
                 String resposta = Util.enviaRequest(delete);
-                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n"+resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro deleteado com sucesso!\n" + resposta, "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 CarregaTabela();
             }
         } catch (IOException | HttpException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException ex) {
@@ -342,5 +368,5 @@ public class ListagemCliente extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
 }

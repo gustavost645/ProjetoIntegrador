@@ -5,6 +5,7 @@
  */
 package br.com.l2g.views.veiculo;
 
+import br.com.l2g.model.Usuario;
 import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
@@ -41,8 +42,10 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
      */
     private static final String URL_BASE = Environment.DEV.url();
     private static final String URL_VEICULO = URL_BASE + "veiculo";
+    private final Usuario usuarioTelaPrincipal;
 
-    public ListagemVeiculos() {
+    public ListagemVeiculos(Usuario usuarioTelaPrincipal) {
+        this.usuarioTelaPrincipal = usuarioTelaPrincipal;
         initComponents();
         CarregaTabela();
     }
@@ -68,6 +71,7 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Listagem de Clientes");
+        setVisible(Util.validaPermissaoAcesso(usuarioTelaPrincipal, this.getClass().getName(), jButton1, jButton2, jButton3));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir_free-10.png"))); // NOI18N
         jButton1.setText("Incluir");
@@ -218,11 +222,7 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             AlterarVeiculo();
-        } catch (IOException ex) {
-            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (HttpException ex) {
-            Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchPaddingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ListagemVeiculos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -277,13 +277,13 @@ public class ListagemVeiculos extends javax.swing.JInternalFrame {
     }
 
     private void IncluirVeiculo() {
-        CadastroVeiculos view = new CadastroVeiculos(null, true, "incluir");
+        CadastroVeiculos view = new CadastroVeiculos(null, true, "incluir",usuarioTelaPrincipal);
         view.setVisible(true);
         CarregaTabela();
     }
 
     private void AlterarVeiculo() throws IOException, HttpException, NoSuchPaddingException {
-        CadastroVeiculos view = new CadastroVeiculos(null, true, "editar");
+        CadastroVeiculos view = new CadastroVeiculos(null, true, "editar",usuarioTelaPrincipal);
         view.enviarCodigoSelecionado(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
         view.setVisible(true);
         CarregaTabela();
