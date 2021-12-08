@@ -9,6 +9,7 @@ import br.com.l2g.model.Cidade;
 import br.com.l2g.model.Cliente;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
+import br.com.l2g.views.cidade.ListCidade;
 import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -702,7 +703,8 @@ public class CadastroCliente extends javax.swing.JDialog {
     }
 
     private void listarCidade() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ListCidade tl = new ListCidade(null, true, this);
+        tl.setVisible(true);
     }
 
     private void salvarCliente() {
@@ -781,6 +783,12 @@ public class CadastroCliente extends javax.swing.JDialog {
             Logger.getLogger(CadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void setCidade(Cidade cidade) {
+        cidadeIdText.setText(String.valueOf(cidade.getIdCidade()));
+        nomeCidadeText.setText(cidade.getNomeCidade());
+        estadoText.setText(cidade.getUfEstado());
     }
 
 }

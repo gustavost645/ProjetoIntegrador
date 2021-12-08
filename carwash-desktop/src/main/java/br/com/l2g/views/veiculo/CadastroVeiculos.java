@@ -12,7 +12,8 @@ import br.com.l2g.model.Veiculo;
 import br.com.l2g.util.Environment;
 import br.com.l2g.util.Util;
 import br.com.l2g.views.cliente.CadastroCliente;
-import br.com.l2g.views.cliente.ListagemCliente;
+import br.com.l2g.views.cliente.ListCliente;
+import br.com.l2g.views.marcas.ListMarcas;
 import java.awt.Frame;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -426,16 +427,21 @@ public class CadastroVeiculos extends javax.swing.JDialog {
         if (!codigoVeiculo.getText().trim().isEmpty()) {
             veiculo.setIdVeiculo(Integer.parseInt(codigoVeiculo.getText().trim()));
         }
+        veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
+        
         Marca marca = new Marca();
         marca.setIdMarca(Integer.parseInt(nomeMarcaVeiculo.getText().trim()));
         marca.setNomeMarca(nomeMarca.getText());
 
         ArrayList<Cliente> persons = new ArrayList<>();
-        persons.add(cliente);
+        Cliente c = new Cliente();
+        c.setIdCliente(Integer.parseInt(codClienteVeiculo.getText()));
+        persons.add(c);
+        
         veiculo.setCliente(persons);
         veiculo.setMarca(marca);
 
-        veiculo.setPlaca(placaVeiculo.getText().trim().toUpperCase());
+        
         return veiculo;
     }
 
@@ -485,11 +491,13 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     }
 
     private void listarCliente() {
-        //
+        ListCliente lp = new ListCliente(null, true, this);
+        lp.setVisible(true);
     }
 
     private void listarMarca() {
-        //
+        ListMarcas lp = new ListMarcas(null, true, this);
+        lp.setVisible(true);
     }
 
     private void pesquisarClintePorId() {
@@ -516,5 +524,10 @@ public class CadastroVeiculos extends javax.swing.JDialog {
     public void setCliente(Cliente cliente) {
         codClienteVeiculo.setText(String.valueOf(cliente.getIdCliente()));
         nomeClienteVeiculo.setText(cliente.getNome());
+    }
+
+    public void setMarca(Marca marca) {
+        nomeMarcaVeiculo.setText(String.valueOf(marca.getIdMarca()));
+        nomeMarca.setText(marca.getNomeMarca());
     }
 }
