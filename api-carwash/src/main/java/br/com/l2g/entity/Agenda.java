@@ -7,6 +7,7 @@ package br.com.l2g.entity;
 
 import br.com.l2g.audit.AgendaAudit;
 import br.com.l2g.audit.ClienteAudit;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -62,12 +63,13 @@ public class Agenda implements Serializable {
     @Column(name = "age_status")
     private Integer statusAgenda;
     
-    /*@Column(name = "age_inicial")
-    //@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @Column(name = "age_inicial")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataInicial;
     
     @Column(name = "age_final")
-    private LocalDateTime dataFinal;*/
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dataFinal;
 
     
 
